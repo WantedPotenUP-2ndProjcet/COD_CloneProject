@@ -15,6 +15,7 @@
   <component name="ChangeListManager">
     <list default="true" id="aa5abe5c-561d-4424-9331-d9cb5b322e14" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.COD/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.COD/.idea/workspace.xml" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/Content/MainPlayer/Character/BP_MainPlayerCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MainPlayer/Character/BP_MainPlayerCharacter.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/MainPlayer/Data/DA_PlayerInfo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MainPlayer/Data/DA_PlayerInfo.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/MainPlayer/Input/IA_MainPlayerLook.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MainPlayer/Input/IA_MainPlayerLook.uasset" afterDir="false" />
@@ -24,6 +25,8 @@
       <change beforePath="$PROJECT_DIR$/Source/COD/MainPlayer/CODMainPlayerCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/COD/MainPlayer/CODMainPlayerCharacter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/COD/MainPlayer/CODMainPlayerCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/COD/MainPlayer/CODMainPlayerCharacter.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/COD/MainPlayer/CODMainPlayerTestModeBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/COD/MainPlayer/CODMainPlayerTestModeBase.cpp" afterDir="false" />
+=======
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -270,8 +273,12 @@
       <workItem from="1754722676178" duration="503000" />
       <workItem from="1754723245181" duration="8194000" />
       <workItem from="1754752528500" duration="835000" />
+<<<<<<< Updated upstream
       <workItem from="1754816523979" duration="2734000" />
       <workItem from="1754870574811" duration="21679000" />
+=======
+      <workItem from="1754816523979" duration="4612000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
