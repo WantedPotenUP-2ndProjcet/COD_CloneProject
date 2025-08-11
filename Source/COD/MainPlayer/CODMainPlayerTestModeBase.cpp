@@ -5,12 +5,12 @@
 
 ACODMainPlayerTestModeBase::ACODMainPlayerTestModeBase()
 {
-	const ConstructorHelpers::FClassFinder<APawn> PlayerClassRef(TEXT("/Game/MainPlayer/Character/BP_MainPlayerCharacter.BP_MainPlayerCharacter_C"));
+	const ConstructorHelpers::FClassFinder<APawn> PlayerClassRef(TEXT("/Script/CoreUObject.Class'/Script/COD.CODMainPlayerCharacter'"));
 	if (PlayerClassRef.Class)
 	{
 		DefaultPawnClass = PlayerClassRef.Class;
 	}
-	const ConstructorHelpers::FClassFinder<APlayerController> PlayerControllerClassRef(TEXT("/Game/MainPlayer/Character/BP_MainPlayerController.BP_MainPlayerController_C"));
+	const ConstructorHelpers::FClassFinder<APlayerController> PlayerControllerClassRef(TEXT("/Script/CoreUObject.Class'/Script/COD.CODMainPlayerController'"));
 	if (PlayerControllerClassRef.Class)
 	{
 		PlayerControllerClass = PlayerControllerClassRef.Class;
