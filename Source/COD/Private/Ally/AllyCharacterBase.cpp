@@ -2,7 +2,7 @@
 
 
 #include "Ally/AllyCharacterBase.h"
-#include "Ally/EAllyState.h"
+#include "Ally/AllyFSM.h"
 
 // Sets default values
 AAllyCharacterBase::AAllyCharacterBase()
@@ -10,12 +10,15 @@ AAllyCharacterBase::AAllyCharacterBase()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	FsmPtr = CreateDefaultSubobject<UAllyFSM>(TEXT("FSM"));
+
 }
 
 // Called when the game starts or when spawned
 void AAllyCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
+
 	
 }
 
@@ -24,26 +27,4 @@ void AAllyCharacterBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-}
-
-// Called to bind functionality to input
-void AAllyCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-
-void AAllyCharacterBase::SetState(class EAllyState State)
-{
-	CurrentState = State;
-}
-
-class EAllyState AAllyCharacterBase::GetState(void)
-{
-	return CurrentState;
-}
-
-void AAllyCharacterBase::ChangeState(class EAllyState State)
-{
-	
 }

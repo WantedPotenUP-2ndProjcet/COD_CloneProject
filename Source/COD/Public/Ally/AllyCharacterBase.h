@@ -15,31 +15,51 @@ public:
 	// Sets default values for this character's properties
 	AAllyCharacterBase();
 
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+	
+	// EAllyState GetState(void);
+	// void SetState(EAllyState State);
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
 
 private:
+	UPROPERTY(VisibleAnywhere)
 	int32 MaxHP;
-	int32 CurrentHP = 1.f;
-	float MaxMoveSpeed = 300.f;
-	float GroundFriction = 8.f;
-	float MaxAcceleration = 2048.f;
-	float BrakingDeceleration = 2048.f;
-	FRotator RotationRate = FRotator(0.f, 720.f, 0.f);
-	class EAllyState CurrentState;
 
-	void SetState(class EAllyState State);
-	class EAllyState GetState(void);
-	void ChangeState(void);
-	void ChangeState(class EAllyState State);
+	UPROPERTY(VisibleAnywhere)
+	int32 HP = 1.f;
+
+	UPROPERTY(VisibleAnywhere)
+	float MoveSpeed = 300.f;
+	
+	UPROPERTY(VisibleAnywhere)
+	float AttackRange;
+	
+	UPROPERTY(VisibleAnywhere)
+	float AttackDamage;
+
+	UPROPERTY(VisibleAnywhere)
+	float GroundFriction = 8.f;
+
+	UPROPERTY(VisibleAnywhere, Category="AI")
+	class AAIController* AIControllerPtr;
+	
+	UPROPERTY(VisibleAnywhere, Category="AI")
+	class UBehaviorTree* BTreePtr;
+
+	FString Name;
+
+	// class EAllyState CurrentState;
+	UPROPERTY(VisibleAnywhere, Category="FSMComponent")
+	class UAllyFSM* FsmPtr;
+
+
+
 };
 
 
