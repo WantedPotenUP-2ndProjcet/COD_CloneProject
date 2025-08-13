@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -12,10 +10,8 @@ class COD_API AAllyCharacterBase : public ACharacter
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
 	AAllyCharacterBase();
 
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	
 	// EAllyState GetState(void);
@@ -23,42 +19,49 @@ public:
 
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
 
 private:
-	UPROPERTY(VisibleAnywhere)
-	int32 MaxHP;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats", meta=(AllowPrivateAccess="true"))
+	int32 MaxHP = 100;
 
-	UPROPERTY(VisibleAnywhere)
-	int32 HP = 1.f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stats", meta=(AllowPrivateAccess="true"))
+	int32 HP = 1;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats", meta=(AllowPrivateAccess="true"))
 	float MoveSpeed = 300.f;
 	
-	UPROPERTY(VisibleAnywhere)
-	float AttackRange;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats", meta=(AllowPrivateAccess="true"))
+	float AttackRange = 3000.f;
 	
-	UPROPERTY(VisibleAnywhere)
-	float AttackDamage;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats", meta=(AllowPrivateAccess="true"))
+	int32 AttackDamage = 10;
 
 	UPROPERTY(VisibleAnywhere)
 	float GroundFriction = 8.f;
 
-	UPROPERTY(VisibleAnywhere, Category="AI")
-	class AAIController* AIControllerPtr;
-	
-	UPROPERTY(VisibleAnywhere, Category="AI")
-	class UBehaviorTree* BTreePtr;
-
-	FString Name;
+	UPROPERTY()
+	FName AllyID;
 
 	// class EAllyState CurrentState;
-	UPROPERTY(VisibleAnywhere, Category="FSMComponent")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="FSM", meta=(AllowPrivateAccess="true"))
 	class UAllyFSM* FsmPtr;
 
 
+public:
+	
+	// UFUNCTION(BlueprintCallable)
+	void StartFire(void);
+	
+	// UFUNCTION(BlueprintCallable)
+	void StopFire(void);
+	
+	// UFUNCTION(BlueprintCallable)
+	void PlayReload(void);
+	
+	// UFUNCTION(BlueprintCallable)
+	void OnArrivedAtPosition(void);
 
 };
 
