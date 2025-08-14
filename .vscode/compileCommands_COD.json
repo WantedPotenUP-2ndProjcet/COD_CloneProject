@@ -120,6 +120,22 @@
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.5\\Engine\\Source"
 	},
 	{
+		"file": "C:\\Team\\COD_CloneProject\\Source\\COD\\Private\\Ally\\AllyDefenseChar.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Team\\COD_CloneProject\\.vscode\\compileCommands_COD\\COD.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Team\\COD_CloneProject\\Source\\COD\\Private\\Ally\\AllyFSM.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Team\\COD_CloneProject\\.vscode\\compileCommands_COD\\COD.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.5\\Engine\\Source"
+	},
+	{
 		"file": "C:\\Team\\COD_CloneProject\\Source\\COD\\Private\\Ally\\DefenseAllyCharacter.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
@@ -129,6 +145,22 @@
 	},
 	{
 		"file": "C:\\Team\\COD_CloneProject\\Source\\COD\\Private\\Ally\\PathTestPawn.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Team\\COD_CloneProject\\.vscode\\compileCommands_COD\\COD.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Team\\COD_CloneProject\\Source\\COD\\Private\\Ally\\Rifle.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Team\\COD_CloneProject\\.vscode\\compileCommands_COD\\COD.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Team\\COD_CloneProject\\Source\\COD\\Private\\Ally\\WeaponBase.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Team\\COD_CloneProject\\.vscode\\compileCommands_COD\\COD.1.rsp"
@@ -152,6 +184,22 @@
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.5\\Engine\\Source"
 	},
 	{
+		"file": "C:\\Team\\COD_CloneProject\\Source\\COD\\Public\\Ally\\AllyDefenseChar.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Team\\COD_CloneProject\\.vscode\\compileCommands_COD\\COD.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Team\\COD_CloneProject\\Source\\COD\\Public\\Ally\\AllyFSM.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Team\\COD_CloneProject\\.vscode\\compileCommands_COD\\COD.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.5\\Engine\\Source"
+	},
+	{
 		"file": "C:\\Team\\COD_CloneProject\\Source\\COD\\Public\\Ally\\DefenseAllyCharacter.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
@@ -160,7 +208,7 @@
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.5\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Team\\COD_CloneProject\\Source\\COD\\Public\\Ally\\EAllyState.h",
+		"file": "C:\\Team\\COD_CloneProject\\Source\\COD\\Public\\Ally\\PathTestPawn.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Team\\COD_CloneProject\\.vscode\\compileCommands_COD\\COD.1.rsp"
@@ -168,7 +216,15 @@
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.5\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Team\\COD_CloneProject\\Source\\COD\\Public\\Ally\\PathTestPawn.h",
+		"file": "C:\\Team\\COD_CloneProject\\Source\\COD\\Public\\Ally\\Rifle.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Team\\COD_CloneProject\\.vscode\\compileCommands_COD\\COD.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Team\\COD_CloneProject\\Source\\COD\\Public\\Ally\\WeaponBase.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Team\\COD_CloneProject\\.vscode\\compileCommands_COD\\COD.1.rsp"

@@ -43,11 +43,17 @@ void AAllyCharacterBase::BeginPlay()
 
 	HP = MaxHP;
 
+    /* if(WeaponClass)
+    {
+        pCurWeapon = GetWorld()->SpawnActor<AWeaponBase>(WeaponClass);
+        pCurWeapon->SetOwner(this);
+        pCurWeapon->SetupAttachment(GetMesh());
+    } */
 }
 
 void AAllyCharacterBase::StartFire(void)
 {
-	
+	FsmPtr->SetState(EAllyState::Shoot);
 }
 
 void AAllyCharacterBase::StopFire(void)
@@ -62,13 +68,18 @@ void AAllyCharacterBase::PlayReload(void)
 
 void AAllyCharacterBase::OnArrivedAtPosition(void)
 {
-	
+	if(GEngine)
+	{
+		const FString CurFunc = ANSI_TO_TCHAR(__FUNCTION__);
+		GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Blue, CurFunc);
+	}
 }
 
-void OnArrivedAtPosition(void)
+AWeaponBase* AAllyCharacterBase::GetCurWeapon(void) const
 {
-	// GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Blue, TEXT("%s"), *__FUNCTION__);
+    return pCurWeapon;
 }
+
 
 // Called every frame
 void AAllyCharacterBase::Tick(float DeltaTime)

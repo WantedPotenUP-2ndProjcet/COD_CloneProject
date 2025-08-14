@@ -23,25 +23,25 @@ protected:
 	
 
 private:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats", meta=(AllowPrivateAccess="true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats", meta = (AllowPrivateAccess = "true"))
 	int32 MaxHP = 100;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stats", meta=(AllowPrivateAccess="true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stats", meta = (AllowPrivateAccess = "true"))
 	int32 HP = 1;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats", meta=(AllowPrivateAccess="true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats", meta = (AllowPrivateAccess = "true"))
 	float MoveSpeed = 300.f;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats", meta=(AllowPrivateAccess="true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats", meta = (AllowPrivateAccess = "true"))
 	float AttackRange = 3000.f;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats", meta=(AllowPrivateAccess="true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats", meta = (AllowPrivateAccess = "true"))
 	int32 AttackDamage = 10;
 
 	UPROPERTY(VisibleAnywhere)
 	float GroundFriction = 8.f;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	FName AllyID;
 
 	// class EAllyState CurrentState;
@@ -63,6 +63,13 @@ public:
 	// UFUNCTION(BlueprintCallable)
 	void OnArrivedAtPosition(void);
 
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class AWeaponBase> WeaponClass;
+
+	UPROPERTY(VisibleAnywhere)
+	class AWeaponBase* pCurWeapon;
+
+	AWeaponBase* GetCurWeapon (void) const;
 };
 
 

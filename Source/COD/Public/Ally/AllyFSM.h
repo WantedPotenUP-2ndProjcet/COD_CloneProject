@@ -1,4 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -27,6 +26,7 @@ public:
 	// Sets default values for this component's properties
 	UAllyFSM();
 
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -34,6 +34,13 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	/* DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAllyStateChanged, EAllyState, Old, EAllyState, New);
+
+	UPROPERTY(BlueprintAssignable, Category="FSM")
+	FOnAllyStateChanged OnStateChanged; */
+
+	void SetState(EAllyState New);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="FSM")
 	EAllyState mState = EAllyState::Idle;	// default

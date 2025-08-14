@@ -8,12 +8,7 @@
             "intelliSenseMode": "msvc-x64",
             "compileCommands": [
                 "C:\\Team\\COD_CloneProject\\.vscode\\compileCommands_COD.json"
-            ],
-            "includePath": [ 
-                "${workspaceFolder}\\Intermediate\\**", 
-                "${workspaceFolder}\\Plugins\\**", 
-                "${workspaceFolder}\\Source\\**" 
-            ],
+            ]
         },
         {
             "name": "Win32",
