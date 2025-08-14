@@ -55,25 +55,25 @@ ACODMainPlayerCharacter::ACODMainPlayerCharacter()
 		MainPlayerMappingContext = InputMappingContextRef.Object;
 	}
 
-	ConstructorHelpers::FObjectFinder<UInputAction> InputActionMoveRef(TEXT("/Script/EnhancedInput.InputAction'/Game/MainPlayer/Input/IA_MainPlayerMove.IA_MainPlayerMove'"));
+	ConstructorHelpers::FObjectFinder<UInputAction> InputActionMoveRef(TEXT("/Script/EnhancedInput.InputAction'/Game/MainPlayer/Input/Player/IA_MainPlayerMove.IA_MainPlayerMove'"));
 	if (InputActionMoveRef.Object)
 	{
 		MoveAction = InputActionMoveRef.Object;
 	}
 
-	ConstructorHelpers::FObjectFinder<UInputAction> InputActionRunRef(TEXT("/Script/EnhancedInput.InputAction'/Game/MainPlayer/Input/IA_MainPlayerRun.IA_MainPlayerRun'"));
+	ConstructorHelpers::FObjectFinder<UInputAction> InputActionRunRef(TEXT("/Script/EnhancedInput.InputAction'/Game/MainPlayer/Input/Player/IA_MainPlayerRun.IA_MainPlayerRun'"));
 	if (InputActionRunRef.Object)
 	{
 		RunAction = InputActionRunRef.Object;
 	}
 
-	ConstructorHelpers::FObjectFinder<UInputAction> InputActionCrouchRef(TEXT("/Script/EnhancedInput.InputAction'/Game/MainPlayer/Input/IA_MainPlayerCrouch.IA_MainPlayerCrouch'"));
+	ConstructorHelpers::FObjectFinder<UInputAction> InputActionCrouchRef(TEXT("/Script/EnhancedInput.InputAction'/Game/MainPlayer/Input/Player/IA_MainPlayerCrouch.IA_MainPlayerCrouch'"));
 	if (InputActionCrouchRef.Object)
 	{
 		CrouchAction = InputActionCrouchRef.Object;
 	}
 
-	ConstructorHelpers::FObjectFinder<UInputAction> InputActionLookRef(TEXT("/Script/EnhancedInput.InputAction'/Game/MainPlayer/Input/IA_MainPlayerLook.IA_MainPlayerLook'"));
+	ConstructorHelpers::FObjectFinder<UInputAction> InputActionLookRef(TEXT("/Script/EnhancedInput.InputAction'/Game/MainPlayer/Input/Player/IA_MainPlayerLook.IA_MainPlayerLook'"));
 	if (InputActionLookRef.Object)
 	{
 		LookAction = InputActionLookRef.Object;
