@@ -15,6 +15,8 @@ public:
 	// Sets default values for this actor's properties
 	AWeaponBase();
 
+	void PullTrigger(void);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -23,5 +25,27 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void OnFire(void);
+
+	UPROPERTY(VisibleAnywhere)
+	USceneComponent* Root;		// root comp
+
+	UPROPERTY(VisibleAnywhere)
+	USkeletalMeshComponent* Mesh;	// mesh -> root 부착
+
+private:
+	UPROPERTY(EditAnywhere)
+	float MaxRange = 1000.f;
+	
+	UPROPERTY(EditAnywhere)
+	float Damage = 10.f;
+
+	bool GunTrace(FHitResult& HitResult, FVector& ShotDirection);
+
+	AController* GetOwnerController() const;
+
 };
+
+
+
+
+
