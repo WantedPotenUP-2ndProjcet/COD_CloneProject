@@ -74,5 +74,5 @@ Plugins/**/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
-COD.code-workspace
+*.code-workspace
 Content/ParagonWraith/*
