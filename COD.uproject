@@ -9,9 +9,7 @@
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
-				"Engine",
-				"UnrealEd",
-				"AIModule"
+				"Engine"
 			]
 		}
 	],
