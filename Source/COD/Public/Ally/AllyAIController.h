@@ -20,9 +20,12 @@ public:
     virtual void OnPossess(APawn* InPawn) override;
 	// virtual void OnUnPosess() override;
 
-	UFUNCTION(BlueprintCallable)
-	void BeginToMove(const FVector& DefenseLocation, float AcceptanceRadius = 75.f);
+    UFUNCTION(BlueprintCallable)
+    void MoveDefenseLocation(const FVector& DefenseLocation, float Acceptance);
+	
     // 이동 완료 콜백
-    virtual void OnMoveCompleted(FAIRequestID RequestID, const struct FPathFollowingResult& Result) override;
+    virtual void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result) override;
+    
 
+    
 };

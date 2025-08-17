@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 
 #include "Ally/AllyCharacterBase.h"
 #include "Ally/AllyFSM.h"
@@ -49,16 +47,19 @@ void AAllyCharacterBase::BeginPlay()
         pCurWeapon->SetOwner(this);
         pCurWeapon->SetupAttachment(GetMesh());
     } */
+
+    if (DefensePoint)
+    {
+        if (AAllyAIController* AC = Cast<AAllyAIController>(GetController()))
+        {
+            AC->MoveDefenseLocation(DefensePoint->GetActorLocation(), DefenseAcceptanceRadius);
+        }
+    }
 }
 
 void AAllyCharacterBase::StartFire(void)
 {
 	FsmPtr->SetState(EAllyState::Shoot);
-}
-
-void AAllyCharacterBase::StopFire(void)
-{
-	
 }
 
 void AAllyCharacterBase::PlayReload(void)
@@ -73,6 +74,7 @@ void AAllyCharacterBase::OnArrivedAtPosition(void)
 		const FString CurFunc = ANSI_TO_TCHAR(__FUNCTION__);
 		GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Blue, CurFunc);
 	}
+    // begin combat
 }
 
 AWeaponBase* AAllyCharacterBase::GetCurWeapon(void) const

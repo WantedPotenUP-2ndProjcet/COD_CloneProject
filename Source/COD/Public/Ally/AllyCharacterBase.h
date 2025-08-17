@@ -51,11 +51,14 @@ private:
 
 public:
 	
+	UPROPERTY(EditAnywhere, Category="Defense")
+	AActor* DefensePoint = nullptr; //ATargetPoint
+
+	UPROPERTY(EditAnywhere, Category="Defense", meta=(ClampMin="0"))
+	float DefenseAcceptanceRadius = 90.f;
+
 	// UFUNCTION(BlueprintCallable)
 	void StartFire(void);
-	
-	// UFUNCTION(BlueprintCallable)
-	void StopFire(void);
 	
 	// UFUNCTION(BlueprintCallable)
 	void PlayReload(void);
