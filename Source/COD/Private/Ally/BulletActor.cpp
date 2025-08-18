@@ -11,7 +11,7 @@ ABulletActor::ABulletActor()
 	PrimaryActorTick.bCanEverTick = true;
 
 	MassKg = 0.004f;
-	V0 = 90000.f;
+	V0 = 10000.f;
 	GravityScale = 1.0f;
 	FireAngleRad = 0.f;
 	Damage = 50.f;
@@ -24,6 +24,10 @@ void ABulletActor::BeginPlay()
 	Super::BeginPlay();
 
 	PrevPos = GetActorLocation();
+	FVector TargetLocation = GetActorForwardVector() * 2000.f;
+	FVector Direction = TargetLocation - this->GetActorLocation();
+	Direction.Normalize();
+	Velocity = Direction * V0;
 }
 
 // Called every frame
@@ -42,6 +46,7 @@ void ABulletActor::Tick(float DeltaTime)
 
 void ABulletActor::CalcFireAngle(FVector TargetLocation)
 {
+	TargetLocation = GetActorForwardVector() * 2000.f;
 	FVector Dir = TargetLocation - this->GetActorLocation();
 	FireAngleRad = FMath::Atan2(Dir.Z, FVector2D(Dir.X, Dir.Y).Size());
 	MaxRange = (V0 * V0 / 980.f) * FMath::Sin(2.f * FireAngleRad);
@@ -60,6 +65,7 @@ FVector ABulletActor::CalcBallistic(FVector& V, float DeltaTime)
 
 void ABulletActor::SetBullet(float DeltaTime)
 {
+	
 	const FVector CurrentPos = GetActorLocation();
     const FVector Accel = CalcBallistic(Velocity, DeltaTime);
     Velocity += Accel * DeltaTime;

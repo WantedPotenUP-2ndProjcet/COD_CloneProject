@@ -53,4 +53,5 @@ public:
 
 private:
 	class AAllyCharacterBase* pOwner;
+
 };

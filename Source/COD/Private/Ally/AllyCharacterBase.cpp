@@ -13,6 +13,9 @@ AAllyCharacterBase::AAllyCharacterBase()
 
 	FsmPtr = CreateDefaultSubobject<UAllyFSM>(TEXT("FSM"));
 
+    SpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("SpawnPoint"));
+    SpawnPoint->SetupAttachment(RootComponent);
+
 	if (auto* Move = GetCharacterMovement())
     {
         Move->MaxWalkSpeed = MoveSpeed;
@@ -62,8 +65,8 @@ void AAllyCharacterBase::StartFire(void)
 {
 	// FsmPtr->SetState(EAllyState::Shoot);
 
-    FTransform t = GetActorTransform();
-    GetWorld()->SpawnActor<ABulletActor>(BulletClass, t);
+    FTransform t = SpawnPoint->GetComponentTransform();
+    ABulletActor* pBullet = GetWorld()->SpawnActor<ABulletActor>(BulletClass, t);
 }
 
 void AAllyCharacterBase::PlayReload(void)
@@ -93,4 +96,13 @@ void AAllyCharacterBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+    if(FsmPtr->mState == EAllyState::Shoot)
+    {
+        FireTime += DeltaTime;
+        if(FireTime >= 3.f)
+        {
+            StartFire();
+            FireTime = 0.f;
+        }
+    }
 }

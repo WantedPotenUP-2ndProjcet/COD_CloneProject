@@ -62,7 +62,6 @@ void UAllyFSM::MoveState(void)
 
 void UAllyFSM::ShootState(void)
 {
-	
 }
 
 void UAllyFSM::DamageState(void)

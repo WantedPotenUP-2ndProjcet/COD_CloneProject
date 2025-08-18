@@ -48,6 +48,8 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="FSM", meta=(AllowPrivateAccess="true"))
 	class UAllyFSM* FsmPtr;
 
+	float FireTime = 0.f;
+
 
 public:
 	
@@ -56,6 +58,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category="Defense", meta=(ClampMin="0"))
 	float DefenseAcceptanceRadius = 90.f;
+	
+	UPROPERTY(EditAnywhere)
+	class USceneComponent* SpawnPoint;
 
 	// UFUNCTION(BlueprintCallable)
 	void StartFire(void);
@@ -76,6 +81,8 @@ public:
 	class AWeaponBase* pCurWeapon;
 
 	AWeaponBase* GetCurWeapon (void) const;
+
+	
 };
 
 
