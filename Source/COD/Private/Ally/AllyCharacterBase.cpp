@@ -3,6 +3,7 @@
 #include "Ally/AllyFSM.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Ally/AllyAIController.h"
+#include "Ally/BulletActor.h"
 
 // Sets default values
 AAllyCharacterBase::AAllyCharacterBase()
@@ -19,10 +20,10 @@ AAllyCharacterBase::AAllyCharacterBase()
         Move->BrakingDecelerationWalking = 2048.f;
         Move->GroundFriction = GroundFriction;
         Move->RotationRate = FRotator(0, 720, 0);
+        Move->bOrientRotationToMovement = true;
 
         // 자리에서 조준 회전을 컨트롤러로 제어하려면:
-        Move->bOrientRotationToMovement = false;
-        bUseControllerRotationYaw = true;
+        // bUseControllerRotationYaw = true;
     }
 
     // 에디터배치/스폰 시 자동으로 AI가 점유하도록
@@ -59,7 +60,10 @@ void AAllyCharacterBase::BeginPlay()
 
 void AAllyCharacterBase::StartFire(void)
 {
-	FsmPtr->SetState(EAllyState::Shoot);
+	// FsmPtr->SetState(EAllyState::Shoot);
+
+    FTransform t = GetActorTransform();
+    GetWorld()->SpawnActor<ABulletActor>(BulletClass, t);
 }
 
 void AAllyCharacterBase::PlayReload(void)
@@ -75,6 +79,7 @@ void AAllyCharacterBase::OnArrivedAtPosition(void)
 		GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Blue, CurFunc);
 	}
     // begin combat
+    FsmPtr->SetState(EAllyState::Shoot);
 }
 
 AWeaponBase* AAllyCharacterBase::GetCurWeapon(void) const

@@ -69,6 +69,9 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class AWeaponBase> WeaponClass;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<class ABulletActor> BulletClass;
+
 	UPROPERTY(VisibleAnywhere)
 	class AWeaponBase* pCurWeapon;
 

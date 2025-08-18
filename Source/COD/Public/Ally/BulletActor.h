@@ -23,15 +23,28 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	float Mass; 
+	float MassKg; 
 	float V0;
-	float Gravity;
+	float GravityScale;
 	float FireAngleRad;
 	float MaxRange;
 	float Damage;
+	float DragK;
 	FVector Velocity;
 
+	UPROPERTY(EditAnywhere, Category="Debug")
+	bool bDebugTrail = true;
+
+	UPROPERTY(EditAnywhere, Category="Debug")
+	float TrailLifeTime = 1.0f;
+
+	UPROPERTY(EditAnywhere, Category="Debug")
+	FColor TrailColor = FColor::Red;
+
+	FVector PrevPos;
+	
 private:
 	void CalcFireAngle (FVector TargetLocation);
-	void Ballistic (float DeltaTime);
+	void SetBullet (float DeltaTime);
+	FVector CalcBallistic (FVector& V, float DeltaTime);
 };
