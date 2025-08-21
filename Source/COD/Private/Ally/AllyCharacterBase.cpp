@@ -14,10 +14,10 @@ AAllyCharacterBase::AAllyCharacterBase()
 
 	if (auto* Move = GetCharacterMovement())
     {
-        Move->MaxWalkSpeed = MoveSpeed;
+        Move->MaxWalkSpeed = 300.f;
         Move->MaxAcceleration = 2048.f;
         Move->BrakingDecelerationWalking = 2048.f;
-        Move->GroundFriction = GroundFriction;
+        Move->GroundFriction = 8.f;
         Move->RotationRate = FRotator(0, 720, 0);
 
         // 자리에서 조준 회전을 컨트롤러로 제어하려면:
@@ -40,6 +40,7 @@ void AAllyCharacterBase::BeginPlay()
 	Super::BeginPlay();
 
 	HP = MaxHP;
+    GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);
 
     /* if(WeaponClass)
     {

@@ -29,18 +29,6 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stats", meta = (AllowPrivateAccess = "true"))
 	int32 HP = 1;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats", meta = (AllowPrivateAccess = "true"))
-	float MoveSpeed = 300.f;
-	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats", meta = (AllowPrivateAccess = "true"))
-	float AttackRange = 3000.f;
-	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats", meta = (AllowPrivateAccess = "true"))
-	int32 AttackDamage = 10;
-
-	UPROPERTY(VisibleAnywhere)
-	float GroundFriction = 8.f;
-
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	FName AllyID;
 
