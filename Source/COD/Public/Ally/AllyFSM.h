@@ -50,8 +50,4 @@ public:
 	void ShootState(void);
 	void DamageState(void);
 	void DieState(void);
-
-private:
-	class AAllyCharacterBase* pOwner;
-
 };
