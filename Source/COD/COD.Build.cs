@@ -10,6 +10,6 @@ public class COD : ModuleRules
 		
 		PublicIncludePaths.AddRange(new string[] { "COD" });
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "AIModule" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "AIModule", "UMG" });
 	}
 }
