@@ -5,7 +5,7 @@ UAllyFSM::UAllyFSM()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 
-	
+	pOwner = Cast<AAllyCharacterBase>(GetOwner());
 }
 
 
@@ -62,9 +62,6 @@ void UAllyFSM::MoveState(void)
 
 void UAllyFSM::ShootState(void)
 {
-	AAllyCharacterBase* OwnChar = Cast<AAllyCharacterBase>(GetOwner());
-	if(OwnChar)
-		UE_LOG(LogTemp, Error, TEXT("Success"));
 }
 
 void UAllyFSM::DamageState(void)
