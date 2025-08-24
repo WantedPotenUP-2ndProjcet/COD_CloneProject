@@ -8,16 +8,22 @@
 AAllyAIController::AAllyAIController()
 {
     // bAttachToPawn = true;
+    
 }
 
 void AAllyAIController::OnPossess(APawn* InPawn)
 {
     Super::OnPossess(InPawn);
+    p_OwnChar = Cast<AAllyCharacterBase>(GetPawn());
 }
 
 void AAllyAIController::MoveDefenseLocation(const FVector& DefenseLocation, float Acceptance)
 {
-    MoveToLocation(DefenseLocation, Acceptance, false, true, false, false, nullptr, true);
+    if(p_OwnChar != nullptr)
+    {
+        p_OwnChar->SetState(EAllyState::Move);
+        MoveToLocation(DefenseLocation, Acceptance, false, true, false, false, nullptr, true);
+    }
 }
 
 // void AAllyAIController::OnUnPosess()
@@ -33,11 +39,16 @@ void AAllyAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollo
         return;
     if (Result.IsSuccess())
     {
-        if (AAllyCharacterBase* Ally = Cast<AAllyCharacterBase>(GetPawn()))
+        if (p_OwnChar)
         {
-            Ally->OnArrivedAtPosition();
+            p_OwnChar->OnArrivedAtPosition();
         }
     }
+    
+}
+
+void AAllyAIController::RecieveOrder()
+{
     
 }
 

@@ -27,5 +27,9 @@ public:
     virtual void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result) override;
     
 
+private:
+    class AAllyCharacterBase * p_OwnChar;
+
+    void RecieveOrder();
     
 };
