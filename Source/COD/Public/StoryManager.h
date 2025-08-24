@@ -6,6 +6,14 @@
 #include "GameFramework/Actor.h"
 #include "StoryManager.generated.h"
 
+UENUM(BlueprintType)
+enum class EPhase : uint8
+{
+	Start,
+	Phase2,
+	Ending
+};
+
 UCLASS()
 class COD_API AStoryManager : public AActor
 {
@@ -23,4 +31,13 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	EPhase CurPhase = EPhase::Start;
+
+	// UFUNCTION(BlueprintCallable)
+	void ChangePhase(EPhase NewPhase);
+
+private:
+	void StartPhase();
+	void SecondPhase();
+	void EndPhase();
 };

@@ -79,10 +79,12 @@ private:
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	FName AllyID;
-	
+
 	float FireTime = 0.f;
 	bool bMoving = false;
 	bool bShooting = false;
+
+	
 };
 
 

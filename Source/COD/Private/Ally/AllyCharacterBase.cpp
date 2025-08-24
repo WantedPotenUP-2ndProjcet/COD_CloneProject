@@ -2,7 +2,7 @@
 #include "Ally/AllyCharacterBase.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Ally/AllyAIController.h"
-#include "Ally/BulletActor.h"
+#include "Ally/WeaponBase.h"
 
 // Sets default values
 AAllyCharacterBase::AAllyCharacterBase()
@@ -39,13 +39,15 @@ void AAllyCharacterBase::BeginPlay()
 	Super::BeginPlay();
     SetState(EAllyState::Idle);
 	HP = MaxHP;
+    GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);
 
-    /* if(WeaponClass)
+    if(WeaponClass)
     {
         pCurWeapon = GetWorld()->SpawnActor<AWeaponBase>(WeaponClass);
         pCurWeapon->SetOwner(this);
-        pCurWeapon->SetupAttachment(GetMesh());
-    } */
+        pCurWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("Grip"));
+        pCurWeapon->SetOwner(this);
+    }
 
     if (DefensePoint)
     {
@@ -129,7 +131,7 @@ void AAllyCharacterBase::ShootState()
 
 void AAllyCharacterBase::DamageState()
 {
-    
+	
 }
 
 void AAllyCharacterBase::DieState()

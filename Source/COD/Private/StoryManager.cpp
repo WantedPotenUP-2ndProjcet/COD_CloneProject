@@ -23,5 +23,40 @@ void AStoryManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	switch (CurPhase)
+	{
+		case EPhase::Start:
+			StartPhase();
+			break;
+
+		case EPhase::Phase2:
+			SecondPhase();
+			break;
+
+		case EPhase::Ending:
+			EndPhase();
+			break;
+	}
+
+}
+
+void AStoryManager::StartPhase()
+{
+	
+}
+
+void AStoryManager::SecondPhase()
+{
+	
+}
+
+void AStoryManager::EndPhase()
+{
+	
+}
+
+void AStoryManager::ChangePhase(EPhase NewPhase)
+{
+	CurPhase = NewPhase;
 }
 

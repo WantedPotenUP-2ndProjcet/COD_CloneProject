@@ -26,23 +26,27 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 
-	UPROPERTY(VisibleAnywhere)
-	USceneComponent* Root;		// root comp
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class USceneComponent* Root;
 
-	UPROPERTY(VisibleAnywhere)
-	USkeletalMeshComponent* Mesh;	// mesh -> root 부착
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UStaticMeshComponent* Mesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UArrowComponent * Muzzle;
 
 private:
-	UPROPERTY(EditAnywhere)
-	float MaxRange = 1000.f;
 	
 	UPROPERTY(EditAnywhere)
 	float Damage = 10.f;
 
-	bool GunTrace(FHitResult& HitResult, FVector& ShotDirection);
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class ABulletActor> BulletClass;
 
 	AController* GetOwnerController() const;
 
+	void SpawnBullet();
+	
 };
 
 
