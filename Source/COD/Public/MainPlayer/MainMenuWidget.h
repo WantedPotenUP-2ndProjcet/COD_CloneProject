@@ -1,4 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -13,9 +13,23 @@ UCLASS()
 class COD_API UMainMenuWidget : public UUserWidget
 {
 	GENERATED_BODY()
-
-public:
-	UPROPERTY(meta=(BindWidget))
-	class UImage* MainTouch1;
 	
+public:
+	virtual void NativeConstruct() override;
+
+	UFUNCTION()
+	void StartGame();
+
+	UFUNCTION()
+	void QuitGame();
+
+private:
+	UPROPERTY(meta=(BindWidget))
+	class UButton* StartGameBtn;
+
+	UPROPERTY(meta=(BindWidget))
+	class UButton* OptionsBtn;
+
+	UPROPERTY(meta=(BindWidget))
+	class UButton* QuitGameBtn;
 };
