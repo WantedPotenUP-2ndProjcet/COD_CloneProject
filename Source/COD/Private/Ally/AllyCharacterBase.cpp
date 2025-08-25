@@ -1,20 +1,14 @@
 
 #include "Ally/AllyCharacterBase.h"
-#include "Ally/AllyFSM.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Ally/AllyAIController.h"
-#include "Ally/BulletActor.h"
+#include "Ally/WeaponBase.h"
 
 // Sets default values
 AAllyCharacterBase::AAllyCharacterBase()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
-	FsmPtr = CreateDefaultSubobject<UAllyFSM>(TEXT("FSM"));
-
-    SpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("SpawnPoint"));
-    SpawnPoint->SetupAttachment(RootComponent);
+	PrimaryActorTick.bCanEverTick = true;;
 
 	if (auto* Move = GetCharacterMovement())
     {
@@ -36,42 +30,24 @@ AAllyCharacterBase::AAllyCharacterBase()
     AIControllerClass = AAllyAIController::StaticClass();
 
 	AllyID = TEXT("None");
+    mState = EAllyState::Idle;
 }
 
 // Called when the game starts or when spawned
 void AAllyCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
-
+    SetState(EAllyState::Idle);
 	HP = MaxHP;
+    GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);
 
-    /* if(WeaponClass)
+    if(WeaponClass)
     {
         pCurWeapon = GetWorld()->SpawnActor<AWeaponBase>(WeaponClass);
         pCurWeapon->SetOwner(this);
-        pCurWeapon->SetupAttachment(GetMesh());
-    } */
-
-    if (DefensePoint)
-    {
-        if (AAllyAIController* AC = Cast<AAllyAIController>(GetController()))
-        {
-            AC->MoveDefenseLocation(DefensePoint->GetActorLocation(), DefenseAcceptanceRadius);
-        }
+        pCurWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("Grip"));
+        pCurWeapon->SetOwner(this);
     }
-}
-
-void AAllyCharacterBase::StartFire(void)
-{
-	// FsmPtr->SetState(EAllyState::Shoot);
-
-    FTransform t = SpawnPoint->GetComponentTransform();
-    ABulletActor* pBullet = GetWorld()->SpawnActor<ABulletActor>(BulletClass, t);
-}
-
-void AAllyCharacterBase::PlayReload(void)
-{
-	
 }
 
 void AAllyCharacterBase::OnArrivedAtPosition(void)
@@ -82,7 +58,12 @@ void AAllyCharacterBase::OnArrivedAtPosition(void)
 		GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Blue, CurFunc);
 	}
     // begin combat
-    FsmPtr->SetState(EAllyState::Shoot);
+    SetState(EAllyState::Shoot);
+}
+
+bool AAllyCharacterBase::GetStateMoving(void)
+{
+    return bMoving;
 }
 
 AWeaponBase* AAllyCharacterBase::GetCurWeapon(void) const
@@ -90,19 +71,63 @@ AWeaponBase* AAllyCharacterBase::GetCurWeapon(void) const
     return pCurWeapon;
 }
 
-
 // Called every frame
 void AAllyCharacterBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-    if(FsmPtr->mState == EAllyState::Shoot)
-    {
-        FireTime += DeltaTime;
-        if(FireTime >= 3.f)
-        {
-            StartFire();
-            FireTime = 0.f;
-        }
-    }
+    switch (mState)
+	{
+	case EAllyState::Idle:
+		IdleState();
+		break;
+	
+		case EAllyState::Move:
+		MoveState();
+		break;
+	
+		case EAllyState::Shoot:
+		ShootState();
+		break;
+	
+		case EAllyState::Damage:
+		DamageState();
+		break;
+	
+		case EAllyState::Die:
+		DieState();
+		break;
+	}
+
+}
+
+void AAllyCharacterBase::SetState(EAllyState New)
+{
+    this->mState = New;
+}
+
+void AAllyCharacterBase::IdleState()
+{
+    bMoving = false;
+}
+
+void AAllyCharacterBase::MoveState()
+{
+    bMoving = true;
+}
+
+void AAllyCharacterBase::ShootState()
+{
+    bShooting = true;
+	GetCurWeapon()->PullTrigger();
+}
+
+void AAllyCharacterBase::DamageState()
+{
+	
+}
+
+void AAllyCharacterBase::DieState()
+{
+    
 }
