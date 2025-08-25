@@ -16,7 +16,7 @@ void UMainMenuWidget::NativeConstruct()
 
 void UMainMenuWidget::StartGame()
 {
-	UGameplayStatics::OpenLevel(this, FName("PlayerTestMap"));
+	UGameplayStatics::OpenLevel(this, FName("CODLevel01"));
 }
 
 void UMainMenuWidget::QuitGame()
