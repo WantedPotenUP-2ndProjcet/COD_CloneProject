@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "StoryManager.generated.h"
 
+class AAllyAIController;
+
 UENUM(BlueprintType)
 enum class EPhase : uint8
 {
@@ -33,11 +35,17 @@ public:
 
 	EPhase CurPhase = EPhase::Start;
 
-	// UFUNCTION(BlueprintCallable)
-	void ChangePhase(EPhase NewPhase);
+	UFUNCTION(BlueprintCallable)
+	void ChangePhase();
+
+	UFUNCTION(BlueprintCallable)
+	void RegAICtrl(AAIController* Controller);
 
 private:
 	void StartPhase();
 	void SecondPhase();
 	void EndPhase();
+
+	TArray<TWeakObjectPtr<AAllyAIController>> AllyControllers;
+	TArray<TWeakObjectPtr<AAIController>> EnemyControllers;
 };

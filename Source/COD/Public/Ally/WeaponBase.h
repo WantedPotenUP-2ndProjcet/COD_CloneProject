@@ -36,9 +36,6 @@ public:
 	class UArrowComponent * Muzzle;
 
 private:
-	
-	UPROPERTY(EditAnywhere)
-	float Damage = 10.f;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class ABulletActor> BulletClass;

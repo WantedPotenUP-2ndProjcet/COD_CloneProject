@@ -57,7 +57,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	class AWeaponBase* pCurWeapon;
-
+	
 	AWeaponBase* GetCurWeapon (void) const;
 
 protected:
@@ -81,7 +81,11 @@ private:
 	FName AllyID;
 
 	float FireTime = 0.f;
+
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	bool bMoving = false;
+
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	bool bShooting = false;
 
 	

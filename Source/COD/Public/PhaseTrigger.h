@@ -18,7 +18,7 @@ public:
 	UPROPERTY()
 	class USceneComponent* Root;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	class UBoxComponent* TriggerBox;
 
 	UFUNCTION()
@@ -32,8 +32,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	
-	UPROPERTY(EditInstanceOnly)
-	class AStoryManager * p_StoryManager = nullptr;
+	UPROPERTY(EditAnywhere)
+	class AStoryManager * StoryManager = nullptr;
 	
 	
 private:

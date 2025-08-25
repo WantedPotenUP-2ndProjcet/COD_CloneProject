@@ -68,6 +68,6 @@ void AWeaponBase::PullTrigger(void)
 		GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Blue, CurFunc);
 	}
 	// Need mesh socket effect attact
-	SpawnBullet();
+	// SpawnBullet();
 }
 

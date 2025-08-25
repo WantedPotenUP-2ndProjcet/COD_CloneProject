@@ -4,6 +4,7 @@
 #include "PhaseTrigger.h"
 #include "StoryManager.h"
 #include "Components/BoxComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -29,6 +30,10 @@ void APhaseTrigger::BeginPlay()
 
 	// StoryManager = Cast<AStoryManager>();
 	TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &APhaseTrigger::BoxOnOverlap);
+
+	StoryManager = Cast<AStoryManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AStoryManager::StaticClass()));
+	if (StoryManager == nullptr)
+		UE_LOG(LogTemp, Error, TEXT("Trigger : StoryManager is null"));
 }
 
 // Called every frame
@@ -41,6 +46,11 @@ void APhaseTrigger::Tick(float DeltaTime)
 void APhaseTrigger::BoxOnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	// p_StoryManager->ChangePhase(EPhase::Phase2);
-	UE_LOG(LogTemp, Warning, TEXT("OverLap On!!!!!!!!!"));
+	UE_LOG(LogTemp, Warning, TEXT("OverLap On"));
+	if (StoryManager != nullptr)
+		StoryManager->ChangePhase();
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("TriggerOverlap : StoryManager is null"));
+	}
 }

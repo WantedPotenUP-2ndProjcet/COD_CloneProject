@@ -3,6 +3,7 @@
 
 #include "Ally/AllyAIController.h"
 #include "Ally/AllyCharacterBase.h"
+#include "Kismet/GameplayStatics.h"
 #include "Navigation/PathFollowingComponent.h"
 
 AAllyAIController::AAllyAIController()
@@ -14,15 +15,23 @@ AAllyAIController::AAllyAIController()
 void AAllyAIController::OnPossess(APawn* InPawn)
 {
     Super::OnPossess(InPawn);
-    p_OwnChar = Cast<AAllyCharacterBase>(GetPawn());
+    OwnChar = Cast<AAllyCharacterBase>(GetPawn());
+    StoryManager = Cast<AStoryManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AStoryManager::StaticClass()));
+    if (StoryManager)
+        StoryManager->RegAICtrl(this);
 }
 
-void AAllyAIController::MoveDefenseLocation(const FVector& DefenseLocation, float Acceptance)
+void AAllyAIController::MoveDefenseLocation()
 {
-    if(p_OwnChar != nullptr)
+    if(OwnChar != nullptr)
     {
-        p_OwnChar->SetState(EAllyState::Move);
-        MoveToLocation(DefenseLocation, Acceptance, false, true, false, false, nullptr, true);
+        
+        if (OwnChar->DefensePoint != nullptr )
+        {
+            FVector DefenseLocation = OwnChar->DefensePoint->GetActorLocation();
+            OwnChar->SetState(EAllyState::Move);
+            MoveToLocation(DefenseLocation, OwnChar->DefenseAcceptanceRadius, false, true, false, false, nullptr, true);
+        }
     }
 }
 
@@ -39,16 +48,25 @@ void AAllyAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollo
         return;
     if (Result.IsSuccess())
     {
-        if (p_OwnChar)
+        if (OwnChar)
         {
-            p_OwnChar->OnArrivedAtPosition();
+            OwnChar->OnArrivedAtPosition();
         }
     }
-    
+
+    HasRecieved = false;
 }
 
-void AAllyAIController::RecieveOrder()
+void AAllyAIController::RecieveOrder(EPhase Phase)
 {
+    if (HasRecieved == true)
+        return;
     
+    if (Phase == EPhase::Phase2)
+    {
+        MoveDefenseLocation();
+        HasRecieved = true;
+    }
 }
+
 

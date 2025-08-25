@@ -48,14 +48,6 @@ void AAllyCharacterBase::BeginPlay()
         pCurWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("Grip"));
         pCurWeapon->SetOwner(this);
     }
-
-    if (DefensePoint)
-    {
-        if (AAllyAIController* AC = Cast<AAllyAIController>(GetController()))
-        {
-            AC->MoveDefenseLocation(DefensePoint->GetActorLocation(), DefenseAcceptanceRadius);
-        }
-    }
 }
 
 void AAllyCharacterBase::OnArrivedAtPosition(void)
@@ -127,6 +119,7 @@ void AAllyCharacterBase::MoveState()
 void AAllyCharacterBase::ShootState()
 {
     bShooting = true;
+	GetCurWeapon()->PullTrigger();
 }
 
 void AAllyCharacterBase::DamageState()
