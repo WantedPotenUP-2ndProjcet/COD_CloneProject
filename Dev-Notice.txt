@@ -2,3 +2,5 @@
 08.22 : Dev Branch Complete
 08.22 : Ally - new branch
 08.26 : gg
+main - player - enemy
+.idea .vs delete
