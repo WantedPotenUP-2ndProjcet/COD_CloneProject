@@ -27,6 +27,7 @@ void ABulletActor::BeginPlay()
 	FVector TargetLocation = GetActorForwardVector() * 2000.f;
 	FVector Direction = TargetLocation - this->GetActorLocation();
 	Direction.Normalize();
+	
 	Velocity = Direction * V0;
 }
 

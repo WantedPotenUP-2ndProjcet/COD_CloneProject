@@ -4,6 +4,10 @@
 #include "Ally/WeaponBase.h"
 #include "DrawDebugHelpers.h"
 #include "Engine/World.h"
+#include "Components/StaticMeshComponent.h"
+#include "Ally/BulletActor.h"
+#include "Ally/AllyCharacterBase.h"
+#include "Components/ArrowComponent.h"
 
 // Sets default values
 AWeaponBase::AWeaponBase()
@@ -14,8 +18,16 @@ AWeaponBase::AWeaponBase()
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	SetRootComponent(Root);
 
-	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
-	Mesh->SetupAttachment(Root);
+	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	Mesh->SetupAttachment(RootComponent);
+
+	Mesh->SetRelativeRotation(FRotator(0.f, 180.f, 0.f));
+	Mesh->SetRelativeScale3D(FVector(3.f, 3.5f, 3.f));
+
+	Muzzle = CreateDefaultSubobject<UArrowComponent>(TEXT("Muzzle"));
+	Muzzle->SetupAttachment(RootComponent);
+	Muzzle->SetRelativeLocation(FVector(0.f, 60.f, 6.f));
+	Muzzle->SetRelativeRotation(FRotator(0.f, 90.f, 0.f));
 }
 
 // Called when the game starts or when spawned
@@ -32,31 +44,20 @@ void AWeaponBase::Tick(float DeltaTime)
 
 }
 
-bool AWeaponBase::GunTrace(FHitResult& HitResult, FVector& ShotDirection)
-{
-	AController* OwnerController = GetOwnerController();
-	if(OwnerController == nullptr)
-		return false;
-
-	FVector Location = FVector(0);
-	FRotator Rotation = FRotator(0);
-
-	// 플레이어 좌표 수신
-	FCollisionQueryParams Params;
-	Params.AddIgnoredActor(this);
-	Params.AddIgnoredActor(GetOwner());
-
-	return false;
-}
-
 AController* AWeaponBase::GetOwnerController() const
 {
-	APawn* OwnerPawn = Cast<APawn>(GetOwner());
+	AAllyCharacterBase* OwnerChar = Cast<AAllyCharacterBase>(GetOwner());
 
-	if(OwnerPawn == nullptr)
+	if(OwnerChar == nullptr)
 		return nullptr;
 	
-	return OwnerPawn->GetController();
+	return OwnerChar->GetController();
+}
+
+void AWeaponBase::SpawnBullet()
+{
+	FTransform t = Muzzle->GetComponentTransform();
+    GetWorld()->SpawnActor<ABulletActor>(BulletClass, t);
 }
 
 void AWeaponBase::PullTrigger(void)
@@ -67,9 +68,6 @@ void AWeaponBase::PullTrigger(void)
 		GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Blue, CurFunc);
 	}
 	// Need mesh socket effect attact
-
-	// LineTrace
-	FVector ShotDirection = FVector(0);
-	FHitResult HitResult;
+	// SpawnBullet();
 }
 
