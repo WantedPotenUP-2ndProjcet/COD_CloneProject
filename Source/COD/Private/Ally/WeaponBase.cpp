@@ -28,12 +28,18 @@ AWeaponBase::AWeaponBase()
 	Muzzle->SetupAttachment(RootComponent);
 	Muzzle->SetRelativeLocation(FVector(0.f, 60.f, 6.f));
 	Muzzle->SetRelativeRotation(FRotator(0.f, 90.f, 0.f));
+
+	ConstructorHelpers::FClassFinder<ABulletActor> tmpBullet(TEXT("/Script/Engine.Blueprint'/Game/Ally/Blueprints/BP_Bullet.BP_Bullet_C'"));
+	if (tmpBullet.Succeeded())
+		BulletClass = tmpBullet.Class;
 }
 
 // Called when the game starts or when spawned
 void AWeaponBase::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Owner = Cast<AAllyCharacterBase>(GetOwner());
 	
 }
 
@@ -42,32 +48,37 @@ void AWeaponBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	
 }
 
 AController* AWeaponBase::GetOwnerController() const
 {
-	AAllyCharacterBase* OwnerChar = Cast<AAllyCharacterBase>(GetOwner());
-
-	if(OwnerChar == nullptr)
+	if(!ensure(Owner != nullptr))
+	{
 		return nullptr;
-	
-	return OwnerChar->GetController();
+	}
+	return Owner->GetController();
 }
 
-void AWeaponBase::SpawnBullet()
-{
-	FTransform t = Muzzle->GetComponentTransform();
-    GetWorld()->SpawnActor<ABulletActor>(BulletClass, t);
-}
 
 void AWeaponBase::PullTrigger(void)
 {
 	if(GEngine)
 	{
-		const FString CurFunc = ANSI_TO_TCHAR(__FUNCTION__);
-		GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Blue, CurFunc);
+		FString CurFunc = ANSI_TO_TCHAR(__FUNCTION__);
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Cyan, CurFunc);
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Yellow, GetName());
+		UE_LOG(LogTemp, Warning, TEXT("PullTrigger"));
 	}
+	
+	SpawnBullet();
 	// Need mesh socket effect attact
-	// SpawnBullet();
 }
 
+void AWeaponBase::SpawnBullet()
+{
+	FTransform t = Muzzle->GetComponentTransform();
+    Bullet = GetWorld()->SpawnActor<ABulletActor>(BulletClass, t);
+	if (!IsValid(Bullet))
+		UE_LOG(LogTemp, Error, TEXT("WeaponBase::Bullet NULL"));
+}

@@ -53,4 +53,5 @@ void APhaseTrigger::BoxOnOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 	{
 		UE_LOG(LogTemp, Error, TEXT("TriggerOverlap : StoryManager is null"));
 	}
+	Destroy();
 }

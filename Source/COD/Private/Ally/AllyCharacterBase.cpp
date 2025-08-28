@@ -31,6 +31,10 @@ AAllyCharacterBase::AAllyCharacterBase()
 
 	AllyID = TEXT("None");
     mState = EAllyState::Idle;
+
+	ConstructorHelpers::FClassFinder<AWeaponBase> tmpBPWeapon(TEXT("/Script/Engine.Blueprint'/Game/Ally/Blueprints/BP_WeaponBase.BP_WeaponBase_C'"));
+	if (tmpBPWeapon.Succeeded())
+		WeaponClass = tmpBPWeapon.Class;
 }
 
 // Called when the game starts or when spawned
@@ -46,7 +50,6 @@ void AAllyCharacterBase::BeginPlay()
         pCurWeapon = GetWorld()->SpawnActor<AWeaponBase>(WeaponClass);
         pCurWeapon->SetOwner(this);
         pCurWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("Grip"));
-        pCurWeapon->SetOwner(this);
     }
 }
 
@@ -87,7 +90,12 @@ void AAllyCharacterBase::Tick(float DeltaTime)
 		break;
 	
 		case EAllyState::Shoot:
-		ShootState();
+    	FireTime += DeltaTime;
+    	if (FireTime > 2.0f)
+    	{
+    		ShootState();
+    		FireTime = 0.f;
+    	}
 		break;
 	
 		case EAllyState::Damage:
@@ -119,7 +127,9 @@ void AAllyCharacterBase::MoveState()
 void AAllyCharacterBase::ShootState()
 {
     bShooting = true;
-	GetCurWeapon()->PullTrigger();
+	if (!ensure(pCurWeapon != nullptr))
+		UE_LOG(LogTemp, Error, TEXT("CharBase::pCurWeapon is NULL"));
+	pCurWeapon->PullTrigger();
 }
 
 void AAllyCharacterBase::DamageState()
