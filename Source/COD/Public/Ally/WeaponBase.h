@@ -24,8 +24,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class USceneComponent* Root;
 
@@ -35,15 +34,21 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UArrowComponent * Muzzle;
 
-private:
-
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class ABulletActor> BulletClass;
 
+	UPROPERTY()
+	class ABulletActor* Bullet;
+	
+private:
+	
+	class AAllyCharacterBase* Owner;
+	
 	AController* GetOwnerController() const;
 
 	void SpawnBullet();
-	
+
+
 };
 
 

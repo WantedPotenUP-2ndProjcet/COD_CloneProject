@@ -40,7 +40,7 @@ public:
 	UPROPERTY(EditAnywhere, Category="Defense", meta=(ClampMin="0"))
 	float DefenseAcceptanceRadius = 90.f;
 	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY()
 	class USceneComponent* SpawnPoint;
 	
 	// UFUNCTION(BlueprintCallable)
@@ -51,9 +51,6 @@ public:
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class AWeaponBase> WeaponClass;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSubclassOf<class ABulletActor> BulletClass;
 
 	UPROPERTY(VisibleAnywhere)
 	class AWeaponBase* pCurWeapon;
@@ -82,10 +79,10 @@ private:
 
 	float FireTime = 0.f;
 
-	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(BlueprintReadWrite, Category ="State", meta = (AllowPrivateAccess = "true"))
 	bool bMoving = false;
 
-	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(BlueprintReadWrite, Category ="State", meta = (AllowPrivateAccess = "true"))
 	bool bShooting = false;
 
 	

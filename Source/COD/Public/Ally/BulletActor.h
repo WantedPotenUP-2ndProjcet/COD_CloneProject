@@ -15,6 +15,12 @@ public:
 	// Sets default values for this actor's properties
 	ABulletActor();
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
+	class UCapsuleComponent* Collision;
+
+	UPROPERTY(VisibleAnywhere)
+	class UStaticMeshComponent* Mesh;
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -23,17 +29,13 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	float MassKg; 
-	float V0;
-	float GravityScale;
-	float FireAngleRad;
-	float MaxRange;
-	float Damage;
-	float DragK;
+	UPROPERTY(EditAnywhere)
+	float BulletSpeed = 10000.f;
+	
+	
+private:
+	
 	FVector Velocity;
-
-	UPROPERTY(EditAnywhere, Category="Debug")
-	bool bDebugTrail = true;
 
 	UPROPERTY(EditAnywhere, Category="Debug")
 	float TrailLifeTime = 1.0f;
@@ -43,8 +45,7 @@ public:
 
 	FVector PrevPos;
 	
-private:
-	void CalcFireAngle (FVector TargetLocation);
 	void SetBullet (float DeltaTime);
-	FVector CalcBallistic (FVector& V, float DeltaTime);
+
+	float lifetime = 0.f;
 };
