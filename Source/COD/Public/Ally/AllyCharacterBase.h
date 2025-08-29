@@ -9,7 +9,9 @@ UENUM(BlueprintType)
 enum class EAllyState : uint8
 {
 	Idle,
+	Ready,
 	Move,
+	Cover,
 	Shoot,
 	Damage,
 	Die,
@@ -29,7 +31,9 @@ public:
 	EAllyState mState;
 	void SetState(EAllyState New);
 	void IdleState();
+	void ReadyState();
 	void MoveState();
+	void CoverState();
 	void ShootState();
 	void DamageState();
 	void DieState();
@@ -83,9 +87,16 @@ private:
 	bool bMoving = false;
 
 	UPROPERTY(BlueprintReadWrite, Category ="State", meta = (AllowPrivateAccess = "true"))
+	bool bReady = false;
+
+	UPROPERTY(BlueprintReadWrite, Category ="State", meta = (AllowPrivateAccess = "true"))
 	bool bShooting = false;
 
-	
+	UPROPERTY(BlueprintReadWrite, Category="State", meta = (AllowPrivateAccess = "true"))
+	bool bDamaged = false;
+
+	UPROPERTY(BlueprintReadWrite, Category="State", meta = (AllowPrivateAccess = "true"))
+	bool bCovered = false;
 };
 
 

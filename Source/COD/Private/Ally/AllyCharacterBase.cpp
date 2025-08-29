@@ -84,25 +84,33 @@ void AAllyCharacterBase::Tick(float DeltaTime)
 	case EAllyState::Idle:
 		IdleState();
 		break;
+
+    case EAllyState::Ready:
+    	ReadyState();
+    	break;
 	
-		case EAllyState::Move:
+	case EAllyState::Move:
 		MoveState();
 		break;
-	
-		case EAllyState::Shoot:
+
+    case EAllyState::Cover:
+    	CoverState();
+    	break;
+    	
+	case EAllyState::Shoot:
     	FireTime += DeltaTime;
     	if (FireTime > 2.0f)
-    	{
+    	{ 
     		ShootState();
     		FireTime = 0.f;
     	}
 		break;
 	
-		case EAllyState::Damage:
+	case EAllyState::Damage:
 		DamageState();
 		break;
 	
-		case EAllyState::Die:
+	case EAllyState::Die:
 		DieState();
 		break;
 	}
@@ -116,7 +124,12 @@ void AAllyCharacterBase::SetState(EAllyState New)
 
 void AAllyCharacterBase::IdleState()
 {
-    bMoving = false;
+	bReady = false;
+}
+
+void AAllyCharacterBase::ReadyState()
+{
+	bReady = true;
 }
 
 void AAllyCharacterBase::MoveState()
@@ -132,9 +145,14 @@ void AAllyCharacterBase::ShootState()
 	pCurWeapon->PullTrigger();
 }
 
+void AAllyCharacterBase::CoverState()
+{
+	bCovered = true;
+}
+
 void AAllyCharacterBase::DamageState()
 {
-	
+	bDamaged = true;
 }
 
 void AAllyCharacterBase::DieState()
