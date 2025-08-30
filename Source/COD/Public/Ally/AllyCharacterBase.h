@@ -29,7 +29,13 @@ public:
 	
 	UPROPERTY()
 	EAllyState mState;
+
+	UFUNCTION(BlueprintCallable)
 	void SetState(EAllyState New);
+
+	UFUNCTION(BlueprintCallable)
+	EAllyState GetState() const;
+	
 	void IdleState();
 	void ReadyState();
 	void MoveState();
@@ -39,7 +45,10 @@ public:
 	void DieState();
 
 	UPROPERTY(EditAnywhere, Category="Defense")
-	AActor* DefensePoint = nullptr; //ATargetPoint
+	AActor* FirstDefensePoint = nullptr;
+
+	UPROPERTY(EditAnywhere, Category="Defense")
+	AActor* SecondDefensePoint = nullptr; //ATargetPoint
 
 	UPROPERTY(EditAnywhere, Category="Defense", meta=(ClampMin="0"))
 	float DefenseAcceptanceRadius = 90.f;

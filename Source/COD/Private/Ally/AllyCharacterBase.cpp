@@ -41,7 +41,7 @@ AAllyCharacterBase::AAllyCharacterBase()
 void AAllyCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
-    SetState(EAllyState::Idle);
+    SetState(EAllyState::Ready);
 	HP = MaxHP;
     GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);
 
@@ -55,13 +55,8 @@ void AAllyCharacterBase::BeginPlay()
 
 void AAllyCharacterBase::OnArrivedAtPosition(void)
 {
-	if(GEngine)
-	{
-		const FString CurFunc = ANSI_TO_TCHAR(__FUNCTION__);
-		GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Blue, CurFunc);
-	}
     // begin combat
-    SetState(EAllyState::Shoot);
+    SetState(EAllyState::Ready);
 }
 
 bool AAllyCharacterBase::GetStateMoving(void)
@@ -82,6 +77,7 @@ void AAllyCharacterBase::Tick(float DeltaTime)
     switch (mState)
 	{
 	case EAllyState::Idle:
+    	bReady = false;
 		IdleState();
 		break;
 
@@ -98,7 +94,10 @@ void AAllyCharacterBase::Tick(float DeltaTime)
     	break;
     	
 	case EAllyState::Shoot:
+    	bMoving = false;
+    	bShooting = true;
     	FireTime += DeltaTime;
+    	GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Blue, FString(TEXT("%d"), FireTime));
     	if (FireTime > 2.0f)
     	{ 
     		ShootState();
@@ -122,14 +121,21 @@ void AAllyCharacterBase::SetState(EAllyState New)
     this->mState = New;
 }
 
+EAllyState AAllyCharacterBase::GetState() const
+{
+	return this->mState;
+}
+
 void AAllyCharacterBase::IdleState()
 {
-	bReady = false;
+	
 }
 
 void AAllyCharacterBase::ReadyState()
 {
 	bReady = true;
+	// if enemy alive
+	SetState(EAllyState::Shoot);
 }
 
 void AAllyCharacterBase::MoveState()
@@ -139,23 +145,29 @@ void AAllyCharacterBase::MoveState()
 
 void AAllyCharacterBase::ShootState()
 {
-    bShooting = true;
 	if (!ensure(pCurWeapon != nullptr))
 		UE_LOG(LogTemp, Error, TEXT("CharBase::pCurWeapon is NULL"));
+
 	pCurWeapon->PullTrigger();
 }
 
 void AAllyCharacterBase::CoverState()
 {
 	bCovered = true;
+	bMoving = false;
 }
 
 void AAllyCharacterBase::DamageState()
 {
 	bDamaged = true;
+	bMoving = false;
 }
 
 void AAllyCharacterBase::DieState()
 {
-    
+	bDamaged = true;
+    bMoving = false;
+	bShooting = false;
+	bReady = false;
+	bCovered = false;
 }

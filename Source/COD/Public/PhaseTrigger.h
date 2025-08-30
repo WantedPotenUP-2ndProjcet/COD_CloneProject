@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "StoryManager.h"
 #include "PhaseTrigger.generated.h"
 
 UCLASS()
@@ -20,9 +21,13 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	class UBoxComponent* TriggerBox;
-
-	UFUNCTION()
-	void BoxOnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult);
+	
+	UPROPERTY(EditAnywhere)
+	class AStoryManager * StoryManager = nullptr;
+	
+	UPROPERTY(EditAnywhere)
+	EPhase ToPhase;
+	
 
 protected:
 	// Called when the game starts or when spawned
@@ -32,9 +37,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	
-	UPROPERTY(EditAnywhere)
-	class AStoryManager * StoryManager = nullptr;
-	
+	UFUNCTION()
+	void BoxOnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult);
 	
 private:
 	

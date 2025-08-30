@@ -19,7 +19,7 @@ void AStoryManager::BeginPlay()
 	Super::BeginPlay();
 
 	CurPhase = EPhase::Start;
-	UE_LOG(LogTemp, Warning, TEXT("1st Phase On!"));
+	UE_LOG(LogTemp, Warning, TEXT("StoryManager :: BeginPlay"));
 }
 
 // Called every frame
@@ -31,12 +31,19 @@ void AStoryManager::Tick(float DeltaTime)
 
 void AStoryManager::StartPhase()
 {
-	UE_LOG(LogTemp, Warning, TEXT("1st Phase On!"));
+	UE_LOG(LogTemp, Warning, TEXT("Start!"));
+}
+
+void AStoryManager::FirstPhase()
+{
+	UE_LOG(LogTemp, Warning, TEXT("First Phase!"));
+	for (TWeakObjectPtr<AAllyAIController> Elem : AllyControllers)
+		Elem->RecieveOrder(EPhase::Phase1);
 }
 
 void AStoryManager::SecondPhase()
 {
-	UE_LOG(LogTemp, Warning, TEXT("2nd Phase On!"));
+	UE_LOG(LogTemp, Warning, TEXT("2nd Phase!"));
 	for (TWeakObjectPtr<AAllyAIController> Elem : AllyControllers)
 		Elem->RecieveOrder(EPhase::Phase2);
 		
@@ -44,26 +51,29 @@ void AStoryManager::SecondPhase()
 
 void AStoryManager::EndPhase()
 {
-	UE_LOG(LogTemp, Warning, TEXT("End Phase On!"));
+	UE_LOG(LogTemp, Warning, TEXT("End Phase!"));
 }
 
-void AStoryManager::ChangePhase()
+void AStoryManager::ChangePhase(EPhase newphase)
 {
-	if (CurPhase == EPhase::Start)
+	CurPhase = newphase;
+	switch (CurPhase)
 	{
-		CurPhase = EPhase::Phase2;
-		SecondPhase();
-	}
-
-	else if (CurPhase == EPhase::Phase2)
-	{
-		CurPhase = EPhase::Ending;
-		EndPhase();
-	}
-
-	else
-	{
-		return;
+		case EPhase::Phase1:
+			{
+				FirstPhase();
+				break;
+			}
+			
+		case EPhase::Phase2:
+			{
+				SecondPhase();
+				break;
+			}
+		case EPhase::Ending :
+			{
+				EndPhase();
+			}
 	}
 }
 
