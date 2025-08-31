@@ -72,7 +72,7 @@ void AWeaponBase::PullTrigger(void)
 	}
 	
 	SpawnBullet();
-	// Need mesh socket effect attact
+	// SFX VFX
 }
 
 void AWeaponBase::SpawnBullet()

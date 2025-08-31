@@ -45,6 +45,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	int32 GetEnemyNum() const;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class AAircraft* pAircraft;
+	
 private:
 	void StartPhase();
 	void FirstPhase();
@@ -56,4 +59,6 @@ private:
 
 	UPROPERTY()
 	TArray<TWeakObjectPtr<AAIController>> EnemyControllers;
+
+	
 };

@@ -78,7 +78,7 @@ AWeaponBase* AAllyCharacterBase::GetCurWeapon(void) const
 void AAllyCharacterBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	
     switch (mState)
 	{
 	case EAllyState::Idle:
