@@ -7,6 +7,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
+#include "Kismet/GameplayStatics.h"
 
 UPressEnterKeyWidget::UPressEnterKeyWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -30,6 +31,12 @@ UPressEnterKeyWidget::UPressEnterKeyWidget(const FObjectInitializer& ObjectIniti
 	{
 		ClickMouseAction = ClickMouseActionRef.Object;
 	}
+
+	ConstructorHelpers::FObjectFinder<USoundBase> MainThemeSoundRef(TEXT("/Script/Engine.SoundWave'/Game/MainPlayer/Sounds/UI/Call_of_Duty__Modern_Warfare_3_Campaign_Main_Menu_Theme_-_DaddyNoodle_-_SoundLoadMate_com.Call_of_Duty__Modern_Warfare_3_Campaign_Main_Menu_Theme_-_DaddyNoodle_-_SoundLoadMate_com'"));
+	if (MainThemeSoundRef.Object)
+	{
+		MainThemeSound = MainThemeSoundRef.Object;
+	}
 }
 
 void UPressEnterKeyWidget::NativeConstruct()
@@ -46,6 +53,7 @@ void UPressEnterKeyWidget::NativeConstruct()
 			enhancedInput->BindAction(ClickMouseAction, ETriggerEvent::Started, this, &UPressEnterKeyWidget::PressEnterKey);
 		}
 	}
+	UGameplayStatics::PlaySound2D(this, MainThemeSound);
 }
 
 void UPressEnterKeyWidget::PressEnterKey(const FInputActionValue& Value)

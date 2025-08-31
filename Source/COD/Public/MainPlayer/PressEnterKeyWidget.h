@@ -47,4 +47,6 @@ public:
 	UPROPERTY(meta = (BindWidget))
 	class UImage* PressEnterKeyImage2;
 
+	UPROPERTY()
+	TObjectPtr<class USoundBase> MainThemeSound;
 };
