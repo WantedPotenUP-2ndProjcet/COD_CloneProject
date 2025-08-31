@@ -12,6 +12,7 @@ UENUM(BlueprintType)
 enum class EPhase : uint8
 {
 	Start,
+	Phase1,
 	Phase2,
 	Ending
 };
@@ -36,16 +37,23 @@ public:
 	EPhase CurPhase = EPhase::Start;
 
 	UFUNCTION(BlueprintCallable)
-	void ChangePhase();
+	void ChangePhase(EPhase newphase);
 
 	UFUNCTION(BlueprintCallable)
 	void RegAICtrl(AAIController* Controller);
 
+	UFUNCTION(BlueprintCallable)
+	int32 GetEnemyNum() const;
+
 private:
 	void StartPhase();
+	void FirstPhase();
 	void SecondPhase();
 	void EndPhase();
 
+	UPROPERTY()
 	TArray<TWeakObjectPtr<AAllyAIController>> AllyControllers;
+
+	UPROPERTY()
 	TArray<TWeakObjectPtr<AAIController>> EnemyControllers;
 };

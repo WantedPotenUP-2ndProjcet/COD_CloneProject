@@ -23,6 +23,9 @@ public:
 
     UFUNCTION(BlueprintCallable)
     void MoveDefenseLocation();
+
+	UFUNCTION(BlueprintCallable)
+	void Standby();
 	
     // 이동 완료 콜백
     virtual void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result) override;

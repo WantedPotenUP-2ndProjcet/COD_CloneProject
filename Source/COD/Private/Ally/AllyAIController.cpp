@@ -25,14 +25,30 @@ void AAllyAIController::MoveDefenseLocation()
 {
     if(OwnChar != nullptr)
     {
-        
-        if (OwnChar->DefensePoint != nullptr )
+        if (StoryManager->CurPhase == EPhase::Phase1)
         {
-            FVector DefenseLocation = OwnChar->DefensePoint->GetActorLocation();
-            OwnChar->SetState(EAllyState::Move);
-            MoveToLocation(DefenseLocation, OwnChar->DefenseAcceptanceRadius, false, true, false, false, nullptr, true);
+            if (OwnChar->FirstDefensePoint != nullptr )
+            {
+                FVector DefenseLocation = OwnChar->FirstDefensePoint->GetActorLocation();
+                OwnChar->SetState(EAllyState::Move);
+                MoveToLocation(DefenseLocation, OwnChar->DefenseAcceptanceRadius, false, true, false, false, nullptr, true);
+            }
+        }
+        else if (StoryManager->CurPhase == EPhase::Phase2)
+        {
+            if (OwnChar->SecondDefensePoint != nullptr )
+            {
+                FVector DefenseLocation = OwnChar->SecondDefensePoint->GetActorLocation();
+                OwnChar->SetState(EAllyState::Move);
+                MoveToLocation(DefenseLocation, OwnChar->DefenseAcceptanceRadius, false, true, false, false, nullptr, true);
+            }
         }
     }
+}
+
+void AAllyAIController::Standby()
+{
+    OwnChar->SetState(EAllyState::Ready);
 }
 
 // void AAllyAIController::OnUnPosess()
@@ -45,7 +61,7 @@ void AAllyAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollo
     Super::OnMoveCompleted(RequestID, Result);
 
     if(!Result.IsSuccess())
-        return;
+        UE_LOG(LogTemp, Error, TEXT("Not Arrived"));
     if (Result.IsSuccess())
     {
         if (OwnChar)
@@ -61,11 +77,23 @@ void AAllyAIController::RecieveOrder(EPhase Phase)
 {
     if (HasRecieved == true)
         return;
+
+    if (Phase == EPhase::Start)
+    {
+        HasRecieved = true;
+        
+    }
+
+    if (Phase == EPhase::Phase1)
+    {
+        HasRecieved = true;
+        MoveDefenseLocation();
+    }
     
     if (Phase == EPhase::Phase2)
     {
-        MoveDefenseLocation();
         HasRecieved = true;
+        MoveDefenseLocation();
     }
 }
 

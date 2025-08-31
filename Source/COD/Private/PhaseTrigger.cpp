@@ -4,6 +4,7 @@
 #include "PhaseTrigger.h"
 #include "StoryManager.h"
 #include "Components/BoxComponent.h"
+#include "GameFramework/Character.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -48,7 +49,10 @@ void APhaseTrigger::BoxOnOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 {
 	UE_LOG(LogTemp, Warning, TEXT("OverLap On"));
 	if (StoryManager != nullptr)
-		StoryManager->ChangePhase();
+	{
+		EPhase p = ToPhase;
+		StoryManager->ChangePhase(p);
+	}
 	else
 	{
 		UE_LOG(LogTemp, Error, TEXT("TriggerOverlap : StoryManager is null"));
