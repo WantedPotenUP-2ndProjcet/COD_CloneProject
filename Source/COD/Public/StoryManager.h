@@ -47,6 +47,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class AAircraft* pAircraft;
+
+	UFUNCTION(BlueprintCallable)
+	EPhase GetPhase() const;
 	
 private:
 	void StartPhase();

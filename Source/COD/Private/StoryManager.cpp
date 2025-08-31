@@ -28,6 +28,11 @@ void AStoryManager::Tick(float DeltaTime)
 
 }
 
+EPhase AStoryManager::GetPhase() const
+{
+	return CurPhase;
+}
+
 void AStoryManager::StartPhase()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Start Game"));
