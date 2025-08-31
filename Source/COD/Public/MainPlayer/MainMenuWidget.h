@@ -25,7 +25,7 @@ public:
 
 private:
 	UPROPERTY(meta=(BindWidget))
-	class UButton* StartGameBtn;
+	class UButton* NewGameBtn;
 
 	UPROPERTY(meta=(BindWidget))
 	class UButton* OptionsBtn;

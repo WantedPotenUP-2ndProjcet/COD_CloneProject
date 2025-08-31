@@ -9,8 +9,8 @@
 void UMainMenuWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-
-	StartGameBtn->OnClicked.AddDynamic(this, &UMainMenuWidget::StartGame);
+	
+	NewGameBtn->OnClicked.AddDynamic(this, &UMainMenuWidget::StartGame);
 	QuitGameBtn->OnClicked.AddDynamic(this, &UMainMenuWidget::QuitGame);
 }
 
