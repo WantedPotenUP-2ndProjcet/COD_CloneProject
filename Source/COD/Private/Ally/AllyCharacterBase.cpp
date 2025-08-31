@@ -62,6 +62,7 @@ void AAllyCharacterBase::OnArrivedAtPosition(void)
 {
     // begin combat
     SetState(EAllyState::Ready);
+	bMoving = false;
 }
 
 bool AAllyCharacterBase::GetStateMoving(void)

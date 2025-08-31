@@ -2,6 +2,8 @@
 
 
 #include "Aircraft.h"
+
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 
 
@@ -35,6 +37,7 @@ void AAircraft::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	
 }
 
 void AAircraft::AirStrike()
@@ -42,5 +45,7 @@ void AAircraft::AirStrike()
 	UE_LOG(LogTemp, Warning, TEXT("AirStrike incomming"));
 	SetActorTickEnabled(true);
 	Mesh->SetVisibility(true);
+	// UGameplayStatics::PlaySound2D(GetWorld(), sound);
+	UGameplayStatics::PlaySound2D(GetWorld(), sound);
 }
 

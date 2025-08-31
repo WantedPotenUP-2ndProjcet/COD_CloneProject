@@ -43,6 +43,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector InitLoc;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class USoundBase* sound;
 
 public:
 	UFUNCTION(BlueprintCallable)
