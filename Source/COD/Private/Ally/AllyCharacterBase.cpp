@@ -159,7 +159,9 @@ void AAllyCharacterBase::ShootState()
 	if (!ensure(pCurWeapon != nullptr))
 		UE_LOG(LogTemp, Error, TEXT("CharBase::pCurWeapon is NULL"));
 	
-		pCurWeapon->PullTrigger();
+	pCurWeapon->PullTrigger();
+	PlayAnimMontage(ShootMontage, 1.f);
+	// PlayShootMontageIfNeeded();
 }
 
 void AAllyCharacterBase::CoverState()
@@ -188,4 +190,22 @@ void AAllyCharacterBase::DieState()
 	bShooting = false;
 	bReady = false;
 	bCovered = false;
+}
+
+bool AAllyCharacterBase::PlayShootMontageIfNeeded()
+{
+	if (!ShootMontage) return false;
+
+	// ACharacter::PlayAnimMontage 사용 권장 (복제/루트모션 처리)
+	// 이미 재생 중이면 겹치지 않도록 체크
+	if (UAnimInstance* Anim = GetMesh() ? GetMesh()->GetAnimInstance() : nullptr)
+	{
+		if (Anim->Montage_IsPlaying(ShootMontage))
+		{
+			return false; // 이미 재생중
+		}
+	}
+
+	const float PlayedLen = PlayAnimMontage(ShootMontage, 1.f);
+	return PlayedLen > 0.f;
 }

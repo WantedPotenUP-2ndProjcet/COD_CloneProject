@@ -37,9 +37,9 @@ void ABulletActor::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	SetBullet(DeltaTime);
-	const FVector CurrPos = GetActorLocation();
+	/*const FVector CurrPos = GetActorLocation();
 	DrawDebugLine(GetWorld(), PrevPos, CurrPos, TrailColor, false, 1.f, 0, 1.5f);
-	PrevPos = CurrPos;
+	PrevPos = CurrPos;*/
 
 	lifetime += DeltaTime;
 	if (lifetime > 3.f)

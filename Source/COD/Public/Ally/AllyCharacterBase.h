@@ -67,8 +67,13 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	class AWeaponBase* pCurWeapon;
+
+	UPROPERTY(EditDefaultsOnly, Category="Anim")
+	class UAnimMontage* ShootMontage = nullptr;
 	
 	AWeaponBase* GetCurWeapon (void) const;
+
+	bool PlayShootMontageIfNeeded();
 
 protected:
 	virtual void BeginPlay() override;

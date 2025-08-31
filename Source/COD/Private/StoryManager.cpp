@@ -53,10 +53,8 @@ void AStoryManager::SecondPhase()
 void AStoryManager::EndPhase()
 {
 	UE_LOG(LogTemp, Warning, TEXT("End Phase!"));
-	if (!ensure(pAircraft != nullptr))
-		UE_LOG(LogTemp, Error, TEXT("pAircraft NULL"));
-
-	pAircraft->AirStrike();
+	if (pAircraft != nullptr)
+		pAircraft->AirStrike();
 }
 
 void AStoryManager::ChangePhase(EPhase newphase)

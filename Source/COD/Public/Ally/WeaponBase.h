@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "NiagaraSystem.h"
 #include "WeaponBase.generated.h"
 
 UCLASS()
@@ -39,6 +40,12 @@ public:
 
 	UPROPERTY()
 	class ABulletActor* Bullet;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="VFX")
+	class UNiagaraSystem* MuzzleVFX = nullptr;
+
+	UFUNCTION(BlueprintCallable, Category="VFX")
+	UNiagaraComponent* PlayMuzzleVFX(bool bAttach = true);
 	
 private:
 	
