@@ -18,8 +18,7 @@ void AStoryManager::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CurPhase = EPhase::Start;
-	UE_LOG(LogTemp, Warning, TEXT("StoryManager :: BeginPlay"));
+	ChangePhase(EPhase::Start);
 }
 
 // Called every frame
@@ -31,7 +30,9 @@ void AStoryManager::Tick(float DeltaTime)
 
 void AStoryManager::StartPhase()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Start!"));
+	UE_LOG(LogTemp, Warning, TEXT("Start Game"));
+	for (TWeakObjectPtr<AAllyAIController> Elem : AllyControllers)
+		Elem->RecieveOrder(EPhase::Start);
 }
 
 void AStoryManager::FirstPhase()
@@ -85,6 +86,11 @@ void AStoryManager::RegAICtrl(AAIController* Controller)
 	if (IsValid(Cast<AAllyAIController>(Controller)))
 		AllyControllers.Add(Cast<AAllyAIController>(Controller));
 
-	else
+	else if (IsValid(Controller))
 		EnemyControllers.Add(Controller);
+}
+
+int32 AStoryManager::GetEnemyNum() const
+{
+	return EnemyControllers.Num();
 }

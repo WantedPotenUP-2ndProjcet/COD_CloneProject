@@ -46,6 +46,11 @@ void AAllyAIController::MoveDefenseLocation()
     }
 }
 
+void AAllyAIController::Standby()
+{
+    OwnChar->SetState(EAllyState::Ready);
+}
+
 // void AAllyAIController::OnUnPosess()
 // {
 //     Super::OnUnPosess();
@@ -56,7 +61,7 @@ void AAllyAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollo
     Super::OnMoveCompleted(RequestID, Result);
 
     if(!Result.IsSuccess())
-        return;
+        UE_LOG(LogTemp, Error, TEXT("Not Arrived"));
     if (Result.IsSuccess())
     {
         if (OwnChar)
@@ -72,6 +77,12 @@ void AAllyAIController::RecieveOrder(EPhase Phase)
 {
     if (HasRecieved == true)
         return;
+
+    if (Phase == EPhase::Start)
+    {
+        HasRecieved = true;
+        
+    }
 
     if (Phase == EPhase::Phase1)
     {

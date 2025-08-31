@@ -53,6 +53,11 @@ void AAllyCharacterBase::BeginPlay()
     }
 }
 
+int AAllyCharacterBase::GetRand()
+{
+	return FMath::RandRange(1, 5);
+}
+
 void AAllyCharacterBase::OnArrivedAtPosition(void)
 {
     // begin combat
@@ -97,11 +102,17 @@ void AAllyCharacterBase::Tick(float DeltaTime)
     	bMoving = false;
     	bShooting = true;
     	FireTime += DeltaTime;
-    	GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Blue, FString(TEXT("%d"), FireTime));
+    	
     	if (FireTime > 2.0f)
     	{ 
     		ShootState();
     		FireTime = 0.f;
+    		++ToCover;
+    	}
+    	if (ToCover > MaxToCover)
+    	{
+    		SetState(EAllyState::Cover);
+    		ToCover = 0;
     	}
 		break;
 	
@@ -147,14 +158,21 @@ void AAllyCharacterBase::ShootState()
 {
 	if (!ensure(pCurWeapon != nullptr))
 		UE_LOG(LogTemp, Error, TEXT("CharBase::pCurWeapon is NULL"));
-
-	pCurWeapon->PullTrigger();
+	
+		pCurWeapon->PullTrigger();
 }
 
 void AAllyCharacterBase::CoverState()
 {
 	bCovered = true;
 	bMoving = false;
+	CoverCool+=GetWorld()->GetDeltaSeconds();
+	if (CoverCool > 3)
+	{
+		MaxToCover = GetRand();
+		SetState(EAllyState::Shoot);
+		CoverCool = 0.f;
+	}
 }
 
 void AAllyCharacterBase::DamageState()

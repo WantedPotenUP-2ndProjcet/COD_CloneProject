@@ -91,6 +91,9 @@ private:
 	FName AllyID;
 
 	float FireTime = 0.f;
+	int MaxToCover;
+	int ToCover = 3;
+	float CoverCool = 0.f;
 
 	UPROPERTY(BlueprintReadWrite, Category ="State", meta = (AllowPrivateAccess = "true"))
 	bool bMoving = false;
@@ -106,6 +109,9 @@ private:
 
 	UPROPERTY(BlueprintReadWrite, Category="State", meta = (AllowPrivateAccess = "true"))
 	bool bCovered = false;
+
+
+	int GetRand(void);
 };
 
 
