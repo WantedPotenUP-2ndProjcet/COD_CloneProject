@@ -16,7 +16,8 @@ public:
 	// Sets default values for this actor's properties
 	AWeaponBase();
 
-	void PullTrigger(void);
+	UFUNCTION(BlueprintCallable)
+	void PullTrigger();
 
 protected:
 	// Called when the game starts or when spawned
@@ -46,6 +47,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="VFX")
 	UNiagaraComponent* PlayMuzzleVFX(bool bAttach = true);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class USoundBase* muzzleSFX;
 	
 private:
 	

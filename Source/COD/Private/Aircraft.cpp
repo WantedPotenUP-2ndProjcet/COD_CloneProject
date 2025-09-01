@@ -45,7 +45,7 @@ void AAircraft::AirStrike()
 	UE_LOG(LogTemp, Warning, TEXT("AirStrike incomming"));
 	SetActorTickEnabled(true);
 	Mesh->SetVisibility(true);
-	// UGameplayStatics::PlaySound2D(GetWorld(), sound);
-	UGameplayStatics::PlaySound2D(GetWorld(), sound);
+	if (sound != nullptr)
+		UGameplayStatics::PlaySound2D(GetWorld(), sound);
 }
 

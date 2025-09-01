@@ -9,6 +9,7 @@
 #include "Ally/BulletActor.h"
 #include "Ally/AllyCharacterBase.h"
 #include "Components/ArrowComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AWeaponBase::AWeaponBase()
@@ -81,7 +82,7 @@ AController* AWeaponBase::GetOwnerController() const
 }
 
 
-void AWeaponBase::PullTrigger(void)
+void AWeaponBase::PullTrigger()
 {
 	/*if(GEngine)
 	{
@@ -93,6 +94,8 @@ void AWeaponBase::PullTrigger(void)
 	
 	SpawnBullet();
 	PlayMuzzleVFX(false);
+	if (muzzleSFX != nullptr)
+		UGameplayStatics::PlaySound2D(GetWorld(), muzzleSFX);
 }
 
 void AWeaponBase::SpawnBullet()
