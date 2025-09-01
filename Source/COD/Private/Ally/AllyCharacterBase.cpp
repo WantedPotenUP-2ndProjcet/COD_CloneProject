@@ -157,8 +157,8 @@ void AAllyCharacterBase::MoveState()
 
 void AAllyCharacterBase::ShootState()
 {
-	if (!ensure(pCurWeapon != nullptr))
-		UE_LOG(LogTemp, Error, TEXT("CharBase::pCurWeapon is NULL"));
+	//if (!ensure(pCurWeapon != nullptr))
+		//UE_LOG(LogTemp, Error, TEXT("CharBase::pCurWeapon is NULL"));
 	
 	pCurWeapon->PullTrigger();
 	PlayAnimMontage(ShootMontage, 1.f);

@@ -60,8 +60,8 @@ void AAllyAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollo
 {
     Super::OnMoveCompleted(RequestID, Result);
 
-    if(!Result.IsSuccess())
-        UE_LOG(LogTemp, Error, TEXT("Not Arrived"));
+   // if(!Result.IsSuccess())
+   //     UE_LOG(LogTemp, Error, TEXT("Not Arrived"));
     if (Result.IsSuccess())
     {
         if (OwnChar)

@@ -102,6 +102,6 @@ void AWeaponBase::SpawnBullet()
 {
 	FTransform t = Muzzle->GetComponentTransform();
     Bullet = GetWorld()->SpawnActor<ABulletActor>(BulletClass, t);
-	if (!IsValid(Bullet))
-		UE_LOG(LogTemp, Error, TEXT("WeaponBase::Bullet NULL"));
+	//if (!IsValid(Bullet))
+	//	UE_LOG(LogTemp, Error, TEXT("WeaponBase::Bullet NULL"));
 }
