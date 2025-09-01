@@ -67,8 +67,13 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	class AWeaponBase* pCurWeapon;
+
+	UPROPERTY(EditDefaultsOnly, Category="Anim")
+	class UAnimMontage* ShootMontage = nullptr;
 	
 	AWeaponBase* GetCurWeapon (void) const;
+
+	bool PlayShootMontageIfNeeded();
 
 protected:
 	virtual void BeginPlay() override;
@@ -82,7 +87,7 @@ private:
 	int32 HP = 1;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats", meta = (AllowPrivateAccess = "true"))
-	float MoveSpeed = 300.f;
+	float MoveSpeed = 400.f;
 
 	UPROPERTY(VisibleAnywhere)
 	float GroundFriction = 8.f;

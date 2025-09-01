@@ -5,9 +5,11 @@
 #include "DrawDebugHelpers.h"
 #include "Engine/World.h"
 #include "Components/StaticMeshComponent.h"
+#include "NiagaraFunctionLibrary.h"
 #include "Ally/BulletActor.h"
 #include "Ally/AllyCharacterBase.h"
 #include "Components/ArrowComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AWeaponBase::AWeaponBase()
@@ -51,6 +53,25 @@ void AWeaponBase::Tick(float DeltaTime)
 	
 }
 
+UNiagaraComponent* AWeaponBase::PlayMuzzleVFX(bool bAttach)
+{
+	if (!MuzzleVFX) return nullptr;
+
+	const FTransform Xf = Muzzle->GetComponentTransform();
+	UNiagaraComponent* Comp = UNiagaraFunctionLibrary::SpawnSystemAtLocation(
+		GetWorld(),
+		MuzzleVFX,
+		Xf.GetLocation(),
+		Xf.Rotator(),
+		FVector(1.f),
+		/*bAutoDestroy=*/true,
+		/*bAutoActivate=*/true,
+		ENCPoolMethod::AutoRelease,
+		/*bPreCullCheck=*/true
+	);
+	return Comp;
+}
+
 AController* AWeaponBase::GetOwnerController() const
 {
 	if(!ensure(Owner != nullptr))
@@ -61,18 +82,20 @@ AController* AWeaponBase::GetOwnerController() const
 }
 
 
-void AWeaponBase::PullTrigger(void)
+void AWeaponBase::PullTrigger()
 {
-	if(GEngine)
+	/*if(GEngine)
 	{
 		FString CurFunc = ANSI_TO_TCHAR(__FUNCTION__);
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Cyan, CurFunc);
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Yellow, GetName());
 		UE_LOG(LogTemp, Warning, TEXT("PullTrigger"));
-	}
+	}*/
 	
 	SpawnBullet();
-	// Need mesh socket effect attact
+	PlayMuzzleVFX(false);
+	if (muzzleSFX != nullptr)
+		UGameplayStatics::PlaySound2D(GetWorld(), muzzleSFX);
 }
 
 void AWeaponBase::SpawnBullet()

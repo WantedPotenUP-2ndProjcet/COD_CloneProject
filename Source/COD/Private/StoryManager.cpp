@@ -2,7 +2,7 @@
 
 
 #include "StoryManager.h"
-
+#include "Aircraft.h"
 #include "Ally/AllyAIController.h"
 
 // Sets default values
@@ -10,7 +10,7 @@ AStoryManager::AStoryManager()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	
 }
 
 // Called when the game starts or when spawned
@@ -26,6 +26,11 @@ void AStoryManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+EPhase AStoryManager::GetPhase() const
+{
+	return CurPhase;
 }
 
 void AStoryManager::StartPhase()
@@ -53,6 +58,8 @@ void AStoryManager::SecondPhase()
 void AStoryManager::EndPhase()
 {
 	UE_LOG(LogTemp, Warning, TEXT("End Phase!"));
+	if (pAircraft != nullptr)
+		pAircraft->AirStrike();
 }
 
 void AStoryManager::ChangePhase(EPhase newphase)
