@@ -31,7 +31,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	float BulletSpeed = 10000.f;
-	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bDrawDebug = false;
 	
 private:
 	
