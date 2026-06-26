@@ -117,10 +117,6 @@ void AAllyCharacterBase::Tick(float DeltaTime)
     	}
 		break;
 	
-	case EAllyState::Damage:
-		DamageState();
-		break;
-	
 	case EAllyState::Die:
 		DieState();
 		break;
@@ -176,12 +172,6 @@ void AAllyCharacterBase::CoverState()
 		SetState(EAllyState::Shoot);
 		CoverCool = 0.f;
 	}
-}
-
-void AAllyCharacterBase::DamageState()
-{
-	bDamaged = true;
-	bMoving = false;
 }
 
 void AAllyCharacterBase::DieState()

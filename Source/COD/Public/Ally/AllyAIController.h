@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -6,29 +5,25 @@
 #include "StoryManager.h"
 #include "AllyAIController.generated.h"
 
-/**
- * 
- */
-class AAllyCharacterBase;
+class AAllyBase_mk2;
+
 UCLASS()
 class COD_API AAllyAIController : public AAIController
 {
 	GENERATED_BODY()
 	
 public:
-    AAllyAIController();
+	AAllyAIController();
 
-    virtual void OnPossess(APawn* InPawn) override;
-	// virtual void OnUnPosess() override;
+	virtual void OnPossess(APawn* InPawn) override;
 
-    UFUNCTION(BlueprintCallable)
-    void MoveDefenseLocation();
+	UFUNCTION(BlueprintCallable)
+	void MoveDefenseLocation(EPhase Phase);
 
 	UFUNCTION(BlueprintCallable)
 	void Standby();
 	
-    // 이동 완료 콜백
-    virtual void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result) override;
+	virtual void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result) override;
 
 	void RecieveOrder(EPhase Phase);
 
@@ -36,8 +31,7 @@ public:
 	AStoryManager* StoryManager;
 
 private:
-    class AAllyCharacterBase * OwnChar;
+	TObjectPtr<AAllyBase_mk2> OwnChar = nullptr;
 
 	bool HasRecieved = false;
-    
 };

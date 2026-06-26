@@ -13,7 +13,6 @@ enum class EAllyState : uint8
 	Move,
 	Cover,
 	Shoot,
-	Damage,
 	Die,
 };
 
@@ -41,7 +40,6 @@ public:
 	void MoveState();
 	void CoverState();
 	void ShootState();
-	void DamageState();
 	void DieState();
 
 	UPROPERTY(EditAnywhere, Category="Defense")

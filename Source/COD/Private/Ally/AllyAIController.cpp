@@ -1,100 +1,114 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Ally/AllyAIController.h"
-#include "Ally/AllyCharacterBase.h"
+
+#include "Ally/AllyBase_mk2.h"
 #include "Kismet/GameplayStatics.h"
 #include "Navigation/PathFollowingComponent.h"
 
 AAllyAIController::AAllyAIController()
 {
-    // bAttachToPawn = true;
-    
 }
 
 void AAllyAIController::OnPossess(APawn* InPawn)
 {
-    Super::OnPossess(InPawn);
-    OwnChar = Cast<AAllyCharacterBase>(GetPawn());
-    StoryManager = Cast<AStoryManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AStoryManager::StaticClass()));
-    if (StoryManager)
-        StoryManager->RegAICtrl(this);
+	Super::OnPossess(InPawn);
+
+	OwnChar = Cast<AAllyBase_mk2>(InPawn);
+	StoryManager = Cast<AStoryManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AStoryManager::StaticClass()));
+
+	if (StoryManager)
+	{
+		StoryManager->RegAICtrl(this);
+	}
 }
 
-void AAllyAIController::MoveDefenseLocation()
+void AAllyAIController::MoveDefenseLocation(EPhase Phase)
 {
-    if(OwnChar != nullptr)
-    {
-        if (StoryManager->CurPhase == EPhase::Phase1)
-        {
-            if (OwnChar->FirstDefensePoint != nullptr )
-            {
-                FVector DefenseLocation = OwnChar->FirstDefensePoint->GetActorLocation();
-                OwnChar->SetState(EAllyState::Move);
-                MoveToLocation(DefenseLocation, OwnChar->DefenseAcceptanceRadius, false, true, false, false, nullptr, true);
-            }
-        }
-        else if (StoryManager->CurPhase == EPhase::Phase2)
-        {
-            if (OwnChar->SecondDefensePoint != nullptr )
-            {
-                FVector DefenseLocation = OwnChar->SecondDefensePoint->GetActorLocation();
-                OwnChar->SetState(EAllyState::Move);
-                MoveToLocation(DefenseLocation, OwnChar->DefenseAcceptanceRadius, false, true, false, false, nullptr, true);
-            }
-        }
-    }
+	if (OwnChar == nullptr)
+	{
+		HasRecieved = false;
+		return;
+	}
+
+	AActor* DefensePoint = nullptr;
+
+	switch (Phase)
+	{
+	case EPhase::Phase1:
+		DefensePoint = OwnChar->FirstDefensePoint;
+		break;
+
+	case EPhase::Phase2:
+		DefensePoint = OwnChar->SecondDefensePoint;
+		break;
+
+	default:
+		Standby();
+		return;
+	}
+
+	if (DefensePoint == nullptr)
+	{
+		OwnChar->RequestEngageLoop();
+		HasRecieved = false;
+		return;
+	}
+
+	const FVector Destination = DefensePoint->GetActorLocation();
+	OwnChar->RequestMove(Destination);
+
+	const EPathFollowingRequestResult::Type MoveResult = MoveToLocation(Destination, OwnChar->DefenseAcceptanceRadius, false, true, false, false, nullptr, true);
+	if (MoveResult == EPathFollowingRequestResult::Failed)
+	{
+		OwnChar->RequestEngageLoop();
+		HasRecieved = false;
+	}
 }
 
 void AAllyAIController::Standby()
 {
-    OwnChar->SetState(EAllyState::Ready);
-}
+	if (OwnChar)
+	{
+		OwnChar->RequestStandby();
+	}
 
-// void AAllyAIController::OnUnPosess()
-// {
-//     Super::OnUnPosess();
-// }
+	HasRecieved = false;
+}
 
 void AAllyAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result)
 {
-    Super::OnMoveCompleted(RequestID, Result);
+	Super::OnMoveCompleted(RequestID, Result);
 
-   // if(!Result.IsSuccess())
-   //     UE_LOG(LogTemp, Error, TEXT("Not Arrived"));
-    if (Result.IsSuccess())
-    {
-        if (OwnChar)
-        {
-            OwnChar->OnArrivedAtPosition();
-        }
-    }
+	if (Result.IsSuccess())
+	{
+		if (OwnChar)
+		{
+			OwnChar->NotifyMoveCompleted();
+		}
+	}
 
-    HasRecieved = false;
+	HasRecieved = false;
 }
 
 void AAllyAIController::RecieveOrder(EPhase Phase)
 {
-    if (HasRecieved == true)
-        return;
+	if (HasRecieved)
+	{
+		return;
+	}
 
-    if (Phase == EPhase::Start)
-    {
-        HasRecieved = true;
-        
-    }
+	HasRecieved = true;
 
-    if (Phase == EPhase::Phase1)
-    {
-        HasRecieved = true;
-        MoveDefenseLocation();
-    }
-    
-    if (Phase == EPhase::Phase2)
-    {
-        HasRecieved = true;
-        MoveDefenseLocation();
-    }
+	switch (Phase)
+	{
+	case EPhase::Phase1:
+	case EPhase::Phase2:
+		MoveDefenseLocation(Phase);
+		break;
+
+	default:
+		Standby();
+		break;
+	}
 }
-
-
